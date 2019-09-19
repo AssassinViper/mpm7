@@ -3,6 +3,9 @@ import { Text, View } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import Home from './pages/Home';
 import Loading from './pages/Loading';
+import Register from './pages/Register';
+import Verification from './pages/Verification';
+import TopUsers from './pages/TopUsers';
 
 class emptyView extends React.Component{
 
@@ -15,6 +18,9 @@ const Navigator = createBottomTabNavigator({
 
   Loading,
   Home,
+  Register,
+  Verification,
+  TopUsers,
 
 },{
         

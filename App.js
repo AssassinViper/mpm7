@@ -18,6 +18,8 @@ import {
 import Navigator from './src/Navigator';
 
 const App = () => {
+
+  console.disableYellowBox = true;
   return (
     <Navigator/>
   );

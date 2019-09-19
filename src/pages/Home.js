@@ -7,13 +7,12 @@ export default class Home extends Component {
 
     componentDidMount(){
 
-        alert(Controller.controller.ab)
     }
 
     render() {
         return (
             <View style={s.con}>
-                <Text style={{fontFamily:'shabnam', fontSize:20}}>{"آب جوج"}</Text>
+                
             </View>
         )
     }
