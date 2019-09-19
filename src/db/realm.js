@@ -31,10 +31,6 @@ export default db = {
   }
 
     return db.realm;
-  },
-
-  getToken : ()=>{
-    return db.realm.objects("User")[0].token;
   }
   
 }
