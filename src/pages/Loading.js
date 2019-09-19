@@ -4,6 +4,8 @@ import {AndroidBackHandler} from 'react-navigation-backhandler';
 import Consts from '../Consts';
 import Controller from '../Controller';
 import Realm from '../db/realm';
+import car from '../assets/icon/car.png';
+
 
 export default class Loading extends Component {
 
