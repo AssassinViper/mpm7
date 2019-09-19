@@ -1,0 +1,7 @@
+const Server = {
+
+    domain:"",
+    urls:{
+
+    },
+}
