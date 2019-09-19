@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, Image } from 'react-native';
+import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import Consts from '../Consts';
 import n1 from '../assets/images/n1.png';
 import n2 from '../assets/images/n2.png';
@@ -28,7 +28,7 @@ export default class ProfileCard extends Component {
         }
 
         return (
-            <View style={[s.con, style]}>
+            <TouchableOpacity style={[s.con, style]} onPress={this.props.onPress}>
 
                 {pic}
 
@@ -36,7 +36,7 @@ export default class ProfileCard extends Component {
 
                 <Text style={s.text2}>{this.props.score+" "}<Text style={s.text3}>{"امتیاز"}</Text></Text>
                 
-            </View>
+            </TouchableOpacity>
         )
     }
 }
