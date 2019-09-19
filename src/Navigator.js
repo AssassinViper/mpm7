@@ -6,6 +6,7 @@ import Loading from './pages/Loading';
 import Register from './pages/Register';
 import Verification from './pages/Verification';
 import TopUsers from './pages/TopUsers';
+import Profile from './pages/Profile';
 
 class emptyView extends React.Component{
 
@@ -21,6 +22,7 @@ const Navigator = createBottomTabNavigator({
   Register,
   Verification,
   TopUsers,
+  Profile,
 
 },{
         

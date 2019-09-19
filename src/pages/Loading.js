@@ -38,7 +38,7 @@ export default class Loading extends Component {
 
             if(user.verified){
 
-                this.props.navigation.navigate("TopUsers");
+                this.props.navigation.navigate("Profile");
 
             }else{
 
