@@ -2,9 +2,12 @@ import React, {Component} from 'react';
 import Carousel from 'react-native-snap-carousel';
 import {Text, View} from 'react-native';
 import Consts from '../Consts';
-import Guilan from '../components/states/Guilan';
-import WestAzarbayjan from '../components/states/WestAzarbayjan';
-import Lorestan from '../components/states/Lorestan';
+import Province from '../components/Provinces/Province';
+import {
+  Guilan,
+  Lorestan,
+  WestAzarbayjan,
+} from '../components/Provinces/SvgData';
 const {width, height} = Consts;
 const ITEM_WIDTH = width * 0.5;
 const ITEM_HEIGHT = ITEM_HEIGHT * 0.9;
@@ -13,14 +16,15 @@ export class StateSelect extends Component {
   carousel = React.createRef();
   data = [Guilan, WestAzarbayjan, Lorestan];
 
-  _renderItem = ({item: State, index}) => (
+  _renderItem = ({item, index}) => (
     <View
       style={{
         height: ITEM_HEIGHT,
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <State
+      <Province
+        svgData={item}
         width={ITEM_WIDTH}
         svgProps={{
           fill: '#e4f3df',
