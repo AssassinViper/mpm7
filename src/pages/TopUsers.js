@@ -4,8 +4,14 @@ import Consts from '../Consts'
 import Header from '../components/Header';
 import mark from '../assets/icons/mark.png';
 import ProfileCard from '../components/ProfileCard';
+import { AndroidBackHandler } from 'react-navigation-backhandler';
 
 export default class TopUsers extends Component {
+
+    showProfile = (index, name, score)=>{
+
+        //show profile dialog
+    }
 
     onBack=()=>{
         
@@ -16,7 +22,7 @@ export default class TopUsers extends Component {
     render() {
         return (
             <View style={s.con}>
-                
+                <AndroidBackHandler onBackPress={this.onBack}/>
                 <Header title="برترین های هفته گذشته" onBack={this.onBack}/>
 
                 <View style={s.sec1}>
@@ -39,7 +45,7 @@ export default class TopUsers extends Component {
                 <FlatList
                     style={s.list1}
                     data={list}
-                    renderItem={({item, index})=>(<ProfileCard name={item.name} score={item.score} key={`uc${index}`} index={index}/>)}
+                    renderItem={({item, index})=>(<ProfileCard onPress={this.showProfile} name={item.name} score={item.score} key={`uc${index}`} index={index}/>)}
                 />
 
             </View>
@@ -59,6 +65,7 @@ const s = StyleSheet.create({
 
         height:'80%',
         width:'20%',
+        tintColor:Consts.colors.c3
     },
 
     sec1:{

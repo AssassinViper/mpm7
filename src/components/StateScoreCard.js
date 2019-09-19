@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import Consts from '../Consts';
-import n1 from '../assets/images/n1.png';
-import n2 from '../assets/images/n2.png';
-import n3 from '../assets/images/n3.png';
 
 export default class ProfileCard extends Component {
 
@@ -19,30 +16,16 @@ export default class ProfileCard extends Component {
             style = {backgroundColor:Consts.colors.a2};
         }
 
-        let pic = <Image style={s.img1} source={n1} resizeMode="contain"/>
-
-        if(this.props.index == 1){
-            pic = <Image style={s.img1} source={n2} resizeMode="contain"/>
-        }
-
-        if(this.props.index == 2){
-            pic = <Image style={s.img1} source={n3} resizeMode="contain"/>
-        }
-
-        if(this.props.index > 2){
-            pic = <Text style={s.text4}>{this.props.index+1}</Text>
-        }
-
         return (
-            <TouchableOpacity style={[s.con, style]} onPress={this.showProfile}>
+            <View style={[s.con, style]} onPress={this.showProfile}>
 
-                {pic}
+                <Text style={s.text4}>{this.props.index+1}</Text>
 
                 <Text style={s.text1}>{this.props.name}</Text>
 
                 <Text style={s.text2}>{this.props.score+" "}<Text style={s.text3}>{"امتیاز"}</Text></Text>
                 
-            </TouchableOpacity>
+            </View>
         )
     }
 }
@@ -90,7 +73,7 @@ const s = StyleSheet.create({
         textAlign:'center',
         textAlignVertical:'center',
         fontFamily:'shabnam',
-        fontSize:40,
+        fontSize:35,
         color:Consts.colors.c3,
         bottom:10
     }
