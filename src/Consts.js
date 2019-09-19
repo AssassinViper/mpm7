@@ -2,18 +2,18 @@ import {Platform, Dimensions} from 'react-native';
 
 let {height, width, fontScale} = Dimensions.get('window');
 
-if(Platform.OS == "android"){
-
-    height -= 24;
+if (Platform.OS == 'android') {
+  height -= 24;
 }
 
-const Consts = {
+export const Consts = {
+  height,
+  width,
+  fontScale,
 
-    height,
-    width,
-    fontScale,
-
-    colors:{
+  colors: {
+    a1: '#FFFFFF',
+    a2: '#EEEEEE',
 
         a1:"#FFFFFF",
         a2:"#F9F9F9",

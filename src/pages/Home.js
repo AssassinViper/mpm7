@@ -1,9 +1,12 @@
-import React, { Component } from 'react'
-import { Text, StyleSheet, View } from 'react-native';
+import React, {Component} from 'react';
+import {Text, StyleSheet, View} from 'react-native';
 import Consts from '../Consts';
 import Controller from '../Controller';
 
 export default class Home extends Component {
+  componentDidMount() {
+    alert(Controller.controller.ab);
+  }
 
     componentDidMount(){
 
@@ -21,9 +24,8 @@ export default class Home extends Component {
 let {height, width} = Consts;
 
 const s = StyleSheet.create({
-
-    con:{
-        height,
-        width,
-    }
-})
+  con: {
+    height,
+    width,
+  },
+});
