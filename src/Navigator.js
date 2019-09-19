@@ -4,6 +4,9 @@ import {createBottomTabNavigator, createAppContainer} from 'react-navigation';
 import Home from './pages/Home';
 import Loading from './pages/Loading';
 import StateSelect from './pages/StateSelect';
+import Register from './pages/Register';
+import Verification from './pages/Verification';
+import TopUsers from './pages/TopUsers';
 
 class emptyView extends React.Component {
   render() {
@@ -11,11 +14,18 @@ class emptyView extends React.Component {
   }
 }
 
-const Navigator = createBottomTabNavigator(
-  {StateSelect, Loading, Home},
-  {
-    initialRouteName: 'Loading',
-    /*navigationOptions:{
+const Navigator = createBottomTabNavigator({
+
+  Loading,
+  Home,
+  Register,
+  Verification,
+  TopUsers,
+
+},{
+        
+  initialRouteName:'Loading',
+  /*navigationOptions:{
       headerStyle:{height:0, opacity:0}
   },*/
     headerLayoutPreset: false,

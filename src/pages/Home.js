@@ -8,13 +8,17 @@ export default class Home extends Component {
     alert(Controller.controller.ab);
   }
 
-  render() {
-    return (
-      <View style={s.con}>
-        <Text style={{fontFamily: 'shabnam', fontSize: 20}}>{'آب جوج'}</Text>
-      </View>
-    );
-  }
+    componentDidMount(){
+
+    }
+
+    render() {
+        return (
+            <View style={s.con}>
+                
+            </View>
+        )
+    }
 }
 
 let {height, width} = Consts;

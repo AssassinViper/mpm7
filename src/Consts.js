@@ -15,11 +15,20 @@ export const Consts = {
     a1: '#FFFFFF',
     a2: '#EEEEEE',
 
-    b1: '#000000',
-    b2: '#111111',
+        a1:"#FFFFFF",
+        a2:"#F9F9F9",
+        a3:"#F5F5F5",
+        a4:"#F3F3F3",
+        a5:"#EFEFEF",
 
-    c3: '#77C360',
-  },
-};
+        b1:"#212121",
+        b2:"#212621",
+        b3:"#242126",
+
+        c3:"#77C360",
+
+        d1:"#ba1616"
+    }
+}
 
 export default Consts;
