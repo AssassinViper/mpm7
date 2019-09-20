@@ -120,7 +120,4 @@ cityList = [
     {key:"1", value:"تهران"},
     {key:"2", value:"اصفهان"},
     {key:"3", value:"مشهد"},
-    {key:"4", value:"شیراز"},
-    {key:"5", value:"یزد"},
-    {key:"6", value:"گیلان"},
 ]
