@@ -17,6 +17,8 @@ export default class PlaceDescription extends Component {
       user.event = this.props.city;
       
       Controller.controller.Home_onChangeEvent();
+
+      this.props.navigation.navigate("")
     });
   }
 
@@ -24,7 +26,7 @@ export default class PlaceDescription extends Component {
     return (
       <View style={styles.container}>
       <Image source={this.props.pic} style={styles.image} resizeMode={'cover'} />
-      <View style={{height:Consts.height*0.4, width:'100%'}}>
+      <View style={{height:"100%", width:'100%'}}>
         <Text style={styles.heading}>{this.props.city}</Text>
         <Text style={styles.place}>{this.props.place}</Text>
         <Text style={styles.text1}>{content}</Text>
