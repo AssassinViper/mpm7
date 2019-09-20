@@ -3,6 +3,7 @@ import {Text, StyleSheet, View} from 'react-native';
 import Consts from '../Consts';
 import Header from '../components/Header';
 import {AndroidBackHandler} from 'react-navigation-backhandler';
+import RoadProgress from '../components/RoadProgress';
 
 export default class Progress extends Component {
   onBack = () => {
@@ -15,6 +16,7 @@ export default class Progress extends Component {
       <View style={s.con}>
         <AndroidBackHandler onBackPress={this.onBack} />
         <Header title="پروسه تکمیل سفر" onBack={this.onBack} />
+        <RoadProgress origin={'تهران'} destination={'گیلان'} />
       </View>
     );
   }
