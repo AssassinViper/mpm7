@@ -15,6 +15,7 @@ import {Tehran} from '../components/Provinces/SvgData';
 import scoreboardIcon from '../assets/images/scoreboard.png';
 import arrowUpIcon from '../assets/images/arrow_up.png';
 import logo from '../assets/images/racing.png';
+import profile from '../assets/icons/profile.png';
 const ICON_SIZE = 36;
 
 export default class Home extends Component {
@@ -30,13 +31,23 @@ export default class Home extends Component {
     ]).start();
   }
 
+  onProfile = ()=>{
+
+    this.props.navigation.navigate("Profile")
+  }
+
+  onTopUsers = ()=>{
+
+    this.props.navigation.navigate("TopUsers")
+  }
+
   render() {
     return (
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
           {/* ScoreBoard Icon */}
-          <TouchableNativeFeedback onPress={alert}>
+          <TouchableNativeFeedback onPress={this.onTopUsers}>
             <Image
               resizeMode={'contain'}
               source={scoreboardIcon}
@@ -56,8 +67,13 @@ export default class Home extends Component {
             />
           </View>
 
-          {/* profile icon */}
-          <View style={styles.tempIcon} />
+          <TouchableNativeFeedback onPress={this.onProfile}>
+            <Image
+              resizeMode={'contain'}
+              source={profile}
+              style={styles.scoreBoardIcon}
+            />
+          </TouchableNativeFeedback>
         </View>
 
         {/* main center content */}

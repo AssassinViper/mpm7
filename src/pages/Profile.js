@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, ScrollView, FlatList, Image } from 'react-native'
-import { AndroidBackHandler } from 'react-navigation-backhandler'
+import { Text, StyleSheet, View, ScrollView, FlatList, Image, TouchableOpacity } from 'react-native';
+import { AndroidBackHandler } from 'react-navigation-backhandler';
 import Header from '../components/Header';
+import Dialog, {SlideAnimation} from 'react-native-popup-dialog';
 import Consts from '../Consts';
 import StateScoreCard from '../components/StateScoreCard';
 import {xp2Level} from '../Utils';
@@ -13,8 +14,22 @@ import c5 from '../assets/images/c5.png';
 import c6 from '../assets/images/c6.png';
 import c7 from '../assets/images/c7.png';
 import c8 from '../assets/images/c8.png';
+import CarSelect from './CarSelect';
 
 export default class Profile extends Component {
+
+    state = {car:c1, dialog:false}
+
+    selectCar = ()=>{
+
+        this.state.dialog = true;
+        this.setState(this.state);
+    }
+
+    dismiss = ()=>{
+        this.state.dialog = false;
+        this.setState(this.state);
+    }
 
     onBack = ()=>{
 
@@ -36,7 +51,11 @@ export default class Profile extends Component {
                 <ScrollView nestedScrollEnabled style={s.sec1}>
 
                     <View style={s.sec2}>
-                        <Image style={s.img1} source={c1} resizeMode="contain"/>
+
+                        <TouchableOpacity style={s.btn1} onPress={this.selectCar}>
+                            <Image style={s.img1} source={c1} resizeMode="contain"/>
+                        </TouchableOpacity>
+                        
                         <Text style={s.text1}>{"رضا مارمولک"}</Text>
                     </View>
 
@@ -66,6 +85,10 @@ export default class Profile extends Component {
                     
                 </ScrollView>
                 
+
+                <Dialog visible={this.state.dialog} animationDuration={600} dialogAnimation={new SlideAnimation()}>
+                    <CarSelect onClose={this.dismiss}/>
+                </Dialog>
             </View>
         )
     }
@@ -80,8 +103,14 @@ const s = StyleSheet.create({
         width,
     },
 
-    img1:{
+    btn1:{
         height:'45%',
+        width:'40%',
+        alignItems:'center',
+    },
+
+    img1:{
+        height:'100%',
     },
 
     sec1:{
