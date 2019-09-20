@@ -10,15 +10,22 @@ export default class PlaceDescription extends Component {
 
   onSelect = ()=>{
 
+    alert("1")
+
     let realm = Realm.getRealm();
-    let user = realm.objects("User");
+    let user = realm.objects("User")[0];
+
     realm.write(()=>{
       
       user.event = this.props.city;
       
       Controller.controller.Home_onChangeEvent();
 
-      this.props.navigation.navigate("")
+      if(Controller.controller.Progress_loadData){
+        Controller.controller.Progress_loadData();
+      }
+
+      this.props.navigation.navigate("Progress");
     });
   }
 
@@ -31,7 +38,7 @@ export default class PlaceDescription extends Component {
         <Text style={styles.place}>{this.props.place}</Text>
         <Text style={styles.text1}>{content}</Text>
 
-        <TouchableOpacity style={styles.bt1}>
+        <TouchableOpacity style={styles.bt1} onPress={this.onSelect}>
           <Text style={styles.text2}>{"انتخاب"}</Text>
         </TouchableOpacity>
       </View>

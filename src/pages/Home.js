@@ -45,6 +45,8 @@ export default class Home extends Component {
 
   onChangeEvent = ()=>{
 
+    alert("1");
+    
     let realm = Realm.getRealm();
     let user = realm.objects("User")[0];
 
@@ -52,6 +54,8 @@ export default class Home extends Component {
     this.state.map = event2map(this.state.event);
     this.state.percent = 0;
     this.state.event_selected = true;
+
+    alert(this.state.event)
 
     this.setState(this.state);
   }

@@ -108,13 +108,13 @@ export class SelectDestination extends Component {
             {/* bottom view of descriptions */}
             <View style={styles.scrollViewBottom}>
               <View style={styles.descriptionContainer}>
-                <PlaceDescription pic={event1} city="گیلان" place="پارک ملت رشت"/>
+                <PlaceDescription pic={event1} navigation={this.props.navigation} city="گیلان" place="پارک ملت رشت"/>
               </View>
               <View style={styles.descriptionContainer}>
-                <PlaceDescription pic={event2} city="لرستان" place="قلعه فلک الافلاک"/>
+                <PlaceDescription pic={event2} navigation={this.props.navigation} city="لرستان" place="قلعه فلک الافلاک"/>
               </View>
               <View style={styles.descriptionContainer}>
-                <PlaceDescription pic={event3}  city="آذربایجان غربی" place="تخت سلیمان"/>
+                <PlaceDescription pic={event3} navigation={this.props.navigation} city="آذربایجان غربی" place="تخت سلیمان"/>
               </View>
             </View>
           </View>
