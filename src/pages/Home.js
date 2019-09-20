@@ -23,10 +23,11 @@ const ICON_SIZE = 36;
 
 export default class Home extends Component {
 
-  state = {percent:0, event_selected:false, city:"تهران"}
+  state = {percent:0, event_selected:true, city:"تهران"}
 
   constructor(props) {
     super(props);
+    Controller.controller.Home_changePercent = this.changePercent;
     this.arrowOpacity = new Animated.Value(0);
     this.arrowTransY = new Animated.Value(20);
   }
@@ -37,6 +38,12 @@ export default class Home extends Component {
     ]).start();
 
     this.loadData();
+  }
+
+  changePercent = (percent)=>{
+
+    this.state.percent = percent;
+    this.setState(this.state);
   }
 
   loadData = (cb)=>{
@@ -120,8 +127,6 @@ export default class Home extends Component {
           <Text style={[styles.textFontStyle, styles.contentText]}>
             نقطه شروع من : تهران
           </Text>
-
-          
           
           <Province
             width={WIDTH * 0.6}

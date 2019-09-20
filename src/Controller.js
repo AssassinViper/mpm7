@@ -3,7 +3,7 @@ import { Text, StyleSheet, View } from 'react-native'
 
 export default class Controller extends Component {
 
-    static controller;
+    static controller = {};
 
     ab="abjooj"
 

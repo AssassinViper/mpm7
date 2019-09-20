@@ -32,10 +32,11 @@ export default class SnapShot extends Component {
 
             if(this.state.progress < 100){
                 this.state.progress +=0.07;
+                Controller.controller.Home_changePercent(Math.floor(this.state.progress));
                 this.setData();
             }
             
-        }, 500)
+        }, 100)
     }
 
     setData = ()=>{
