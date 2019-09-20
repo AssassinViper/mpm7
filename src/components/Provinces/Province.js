@@ -60,11 +60,15 @@ class Province extends React.Component {
   render() {
     const {width, svgProps, svgData} = this.props;
     const {aspectRatio, viewBox, path} = svgData;
-    const _height = width * aspectRatio;
+    let w = width;
+    if (aspectRatio > 1) {
+      w = width - (aspectRatio - 1) * width;
+    }
+    const _height = w * aspectRatio;
     return (
       <View
         style={{
-          width: width,
+          width: w,
           height: _height,
         }}>
         <Svg viewBox={viewBox} width={'100%'} height={'100%'}>
