@@ -4,12 +4,19 @@ import Consts from '../Consts';
 import Controller from '../Controller';
 import Realm from '../db/realm';
 const {width} = Consts;
-const IMAGE_SIZE = width * 0.3;
+const IMAGE_SIZE = width * 0.33;
 
 export default class PlaceDescription extends Component {
   onSelect = () => {
     let realm = Realm.getRealm();
-  };
+    let user = realm.objects("User");
+    realm.write(()=>{
+      
+      user.event = this.props.city;
+      
+      Controller.controller.Home_onChangeEvent();
+    });
+  }
 
   render() {
     return (
@@ -44,9 +51,9 @@ const content =
 
 const styles = StyleSheet.create({
   container: {
-    width: '80%',
     flexGrow: 1,
-    borderRadius: 40,
+    width: '85%',
+    borderRadius: 35,
     backgroundColor: '#172121',
     overflow: 'visible',
   },
@@ -58,7 +65,7 @@ const styles = StyleSheet.create({
     borderRadius: IMAGE_SIZE / 2,
     overflow: 'hidden',
     position: 'absolute',
-    bottom: '12%',
+    bottom: '10%',
     right: -IMAGE_SIZE / 2.5,
   },
   heading: {
