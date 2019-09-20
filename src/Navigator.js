@@ -26,7 +26,7 @@ const Navigator = createBottomTabNavigator(
     Profile,
   },
   {
-    initialRouteName: 'Loading',
+    initialRouteName: 'StateSelect',
     /*navigationOptions:{
       headerStyle:{height:0, opacity:0}
   },*/
