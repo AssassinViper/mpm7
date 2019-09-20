@@ -101,7 +101,8 @@ const s = StyleSheet.create({
 
         height:height*0.08,
         width:height*0.08,
-        right:12,
+        right:30,
+        bottom:2,
     },
 
     sec1:{

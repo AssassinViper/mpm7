@@ -9,6 +9,10 @@ import {
 import PlaceDescription from '../components/PlaceDescription';
 import Header from '../components/Header';
 import {AndroidBackHandler} from 'react-navigation-backhandler';
+import event1 from '../assets/images/event1.jpg';
+import event2 from '../assets/images/event2.jpg';
+import event3 from '../assets/images/event3.jpg';
+
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 const {Value, event} = Animated;
 const svgProps = {
@@ -104,7 +108,13 @@ export class SelectDestination extends Component {
             {/* bottom view of descriptions */}
             <View style={styles.scrollViewBottom}>
               <View style={styles.descriptionContainer}>
-                <PlaceDescription />
+                <PlaceDescription pic={event1} city="گیلان" place="پارک ملت رشت"/>
+              </View>
+              <View style={styles.descriptionContainer}>
+                <PlaceDescription pic={event2} city="لرستان" place="قلعه فلک الافلاک"/>
+              </View>
+              <View style={styles.descriptionContainer}>
+                <PlaceDescription pic={event3}  city="آذربایجان غربی" place="تخت سلیمان"/>
               </View>
             </View>
           </View>
@@ -170,9 +180,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   descriptionContainer: {
+    height:"100%",
     padding: 15,
     width: WIDTH,
-    backgroundColor: 'transparent',
+    backgroundColor:'transparent',
     paddingLeft: 30,
   },
   indicatorShell: {

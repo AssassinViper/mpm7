@@ -84,8 +84,6 @@ export default class Home extends Component {
 
     let percent_style = {display:"flex"}
 
-    
-
     let progress_btn_style = styles.footerButton;
     let percentIcon = {}
 
@@ -144,11 +142,13 @@ export default class Home extends Component {
             pathAnimation={true}
           />
 
+          <Text style={styles.txt2}>{this.state.city}</Text>
+
           <TouchableOpacity style={styles.btn1} onPress={this.onStateSelect}>
             <Text style={styles.txt1}>{"سفر های این هفته"}</Text>
           </TouchableOpacity>
 
-          <Text style={styles.txt2}>{this.state.city}</Text>
+          
 
         </View>
 
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop:20,
+    paddingTop:25
   },
   contentText: {
     fontSize: 22,
