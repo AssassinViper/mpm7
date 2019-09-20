@@ -76,7 +76,7 @@ const s = StyleSheet.create({
   },
 
   img1: {
-    height: '45%',
+    height: '40%',
     tintColor: Consts.colors.b3,
   },
 
