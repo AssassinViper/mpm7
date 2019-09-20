@@ -75,7 +75,8 @@ export default class Home extends Component {
   };
 
   render() {
-    let percent_style = {display: 'flex'};
+
+    let percent_style = {display:"flex"}
 
     let progress_btn_style = styles.footerButton;
     let percentIcon = {};
@@ -133,6 +134,8 @@ export default class Home extends Component {
             svgProps={{fill: '#c5f0b9', strokeWidth: 1, stroke: '#c5f0b9'}}
             pathAnimation={true}
           />
+
+          <Text style={styles.txt2}>{this.state.city}</Text>
 
           <TouchableOpacity style={styles.btn1} onPress={this.onStateSelect}>
             <Text style={styles.txt1}>{'سفر های این هفته'}</Text>
