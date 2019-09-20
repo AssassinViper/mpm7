@@ -5,7 +5,7 @@ import {
   View,
   TouchableNativeFeedback,
   Image,
-  Button,
+  Animated,
 } from 'react-native';
 import Consts from '../Consts';
 const {width: WIDTH} = Consts;
@@ -14,10 +14,21 @@ import Province from '../components/Provinces/Province';
 import {Tehran} from '../components/Provinces/SvgData';
 import scoreboardIcon from '../assets/images/scoreboard.png';
 import arrowUpIcon from '../assets/images/arrow_up.png';
+import logo from '../assets/images/racing.png';
 const ICON_SIZE = 36;
 
 export default class Home extends Component {
-  componentDidMount() {}
+  constructor(props) {
+    super(props);
+    this.arrowOpacity = new Animated.Value(0);
+    this.arrowTransY = new Animated.Value(20);
+  }
+  componentDidMount() {
+    Animated.stagger(0, [
+      Animated.timing(this.arrowOpacity, {toValue: 1, duration: 600}),
+      Animated.timing(this.arrowTransY, {toValue: 0, duration: 500}),
+    ]).start();
+  }
 
   render() {
     return (
@@ -38,8 +49,11 @@ export default class Home extends Component {
             <Text style={[styles.textFontStyle, styles.appTitleText]}>
               جاده سوار
             </Text>
-            {/* TODO: add a car wheel icon here */}
-            <View style={styles.tempIcon} />
+            <Image
+              resizeMode={'contain'}
+              source={logo}
+              style={styles.scoreBoardIcon}
+            />
           </View>
 
           {/* profile icon */}
@@ -66,12 +80,18 @@ export default class Home extends Component {
         <View style={styles.footer}>
           <TouchableNativeFeedback>
             <View style={styles.footerButton}>
-              <Image
+              <Animated.Image
                 resizeMode={'contain'}
                 source={arrowUpIcon}
-                style={styles.scoreBoardIcon}
+                style={[
+                  styles.scoreBoardIcon,
+                  {
+                    transform: [{translateY: this.arrowTransY}],
+                    opacity: this.arrowOpacity,
+                  },
+                ]}
               />
-              <Text style={styles.footerButtonText}>% 32</Text>
+              <Text style={styles.footerButtonText}>32 %</Text>
             </View>
           </TouchableNativeFeedback>
         </View>
@@ -112,7 +132,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 22,
     fontFamily: 'shabnam',
-    marginLeft: 10
+    marginLeft: 10,
   },
   container: {
     height: '100%',
