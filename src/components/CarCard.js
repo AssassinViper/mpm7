@@ -59,7 +59,7 @@ const s = StyleSheet.create({
 
     btn1:{
 
-        height:'60%',
+        height:'50%',
         width:'30%',
         borderRadius:8,
         justifyContent:'center',

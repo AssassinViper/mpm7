@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, ScrollView, FlatList, Image, TouchableOpacity } from 'react-native';
-import { AndroidBackHandler } from 'react-navigation-backhandler';
 import Header from '../components/Header';
-import Dialog, {SlideAnimation} from 'react-native-popup-dialog';
-import Consts from '../Consts';
+import close from '../assets/icons/close.png'
 import StateScoreCard from '../components/StateScoreCard';
 import {xp2Level} from '../Utils';
+import Consts from '../Consts';
 import c1 from '../assets/images/c1.png';
 import c2 from '../assets/images/c2.png';
 import c3 from '../assets/images/c3.png';
@@ -14,87 +13,48 @@ import c5 from '../assets/images/c5.png';
 import c6 from '../assets/images/c6.png';
 import c7 from '../assets/images/c7.png';
 import c8 from '../assets/images/c8.png';
-import CarSelect from './CarSelect';
-import Realm from '../db/realm';
-import Controller from '../Controller';
 
 const Cars = {c1,c2,c3,c4,c5,c6,c7,c8};
 
-export default class Profile extends Component {
+export default class ViewProfile extends Component {
 
-    state = {car:c1, dialog:false, name:"رضا مارمولک", score:1765}
-
-    componentDidMount(){
-
-        let realm = Realm.getRealm();
-        let user = realm.objects("User")[0];
-        this.state.name = user.full_name;
-        this.setState(this.state);
-    }
-
-    selectCar = ()=>{
-
-        this.state.dialog = true;
-        this.setState(this.state);
-    }
-
-    changeCar = (cb)=>{
-
-        let realm = Realm.getRealm();
-        let user = realm.objects("User")[0];
-
-        this.state.car = Cars[user.car];
-
-        if(Controller.controller.SnapShot){
-            Controller.controller.SnapShot.setData();
-        }
-
-        this.setState(this.state, cb);
-    }
-
-    dismiss = ()=>{
-        this.state.dialog = false;
-        this.setState(this.state);
-    }
-
-    onBack = ()=>{
-
-        this.props.navigation.navigate("Home");
-        return true;
-    }
+    state = {car:c1, dialog:false}
 
     render() {
 
         let level  = Math.floor(xp2Level(2015));
         let fractur = ((xp2Level(2015) - level) * 100).toFixed(2);
 
+        pic = Cars[this.props.car]
+
         return (
             <View style={s.con}>
-                <AndroidBackHandler onBackPress={this.onBack}/>
 
-                <Header onBack={this.onBack} title="صفحه شخصی"/>
+                <TouchableOpacity style={s.btn2} onPress={this.props.dismiss}>
+                    <Image style={s.img2} source={close} resizeMode="contain"/>
+                </TouchableOpacity>
 
                 <ScrollView nestedScrollEnabled style={s.sec1}>
 
                     <View style={s.sec2}>
 
                         <TouchableOpacity style={s.btn1} onPress={this.selectCar}>
-                            <Image style={s.img1} source={this.state.car} resizeMode="contain"/>
+                            <Image style={s.img1} source={pic} resizeMode="contain"/>
                         </TouchableOpacity>
                         
-                        <Text style={s.text1}>{this.state.name}</Text>
+                        <Text style={s.text1}>{this.props.name}</Text>
                     </View>
 
                     <View style={s.sec4}>
 
                         <View style={s.sec5}>
 
-                            <Text style={s.text2}>{Math.floor(this.state.score / 100)}</Text>
+                            <Text style={s.text2}>{Math.floor(this.props.score / 100)}</Text>
                             <Text style={s.text3}>{"سطح"}</Text>
 
                         </View>
 
-                        <Text style={s.text4}>{`امتیاز شما تا این لحظه ${this.state.score}`}</Text>
+                        <Text style={s.text4}>{`امتیاز شما تا این لحظه ${this.props.score}`}</Text>
 
                         <View style={s.sec6}>
 
@@ -111,36 +71,9 @@ export default class Profile extends Component {
                     
                 </ScrollView>
                 
-
-                <Dialog visible={this.state.dialog} animationDuration={600} dialogAnimation={new SlideAnimation()}>
-                    <CarSelect onClose={this.dismiss} changeCar={this.changeCar}/>
-                </Dialog>
             </View>
         )
     }
-}
-
-const car2Image = (name)=>{
-
-    let pic;
-
-    switch(name){
-
-        case"c1":
-            pic = c1;
-            break;
-
-        case"c2":
-            pic = c2;
-            break;
-        
-        case"c3":
-        pic = c3;
-        break;
-    }
-
-    alert(pic)
-    return pic;
 }
 
 let {height, width} = Consts;
@@ -156,6 +89,19 @@ const s = StyleSheet.create({
         height:'45%',
         width:'40%',
         alignItems:'center',
+    },
+
+    btn2:{
+        height:"10%",
+        width:"20%",
+        justifyContent:'center',
+        alignItems:'center',
+        alignSelf:'flex-end'
+    },
+
+    img2:{
+        height:'40%',
+        tintColor:Consts.colors.c3
     },
 
     img1:{

@@ -9,7 +9,7 @@ export default class ProfileCard extends Component {
 
     showProfile = ()=>{
 
-        this.props.onPress(this.props.index, this.props.name, this.props.score);
+        this.props.onPress(this.props.name, this.props.score, this.props.car);
     }
 
     render() {

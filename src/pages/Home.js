@@ -22,6 +22,9 @@ import Realm from '../db/realm';
 const ICON_SIZE = 36;
 
 export default class Home extends Component {
+
+  state = {percent:0, event_selected:false, city:"تهران"}
+
   constructor(props) {
     super(props);
     this.arrowOpacity = new Animated.Value(0);
@@ -32,6 +35,16 @@ export default class Home extends Component {
       Animated.timing(this.arrowOpacity, {toValue: 1, duration: 800}),
       Animated.timing(this.arrowTransY, {toValue: 0, duration: 700}),
     ]).start();
+
+    this.loadData();
+  }
+
+  loadData = (cb)=>{
+
+    let realm = Realm.getRealm();
+    let user = realm.objects("User")[0];
+    this.state.city = user.city;
+    this.setState(this.state, cb);
   }
 
   onProfile = ()=>{
@@ -53,6 +66,21 @@ export default class Home extends Component {
   }
 
   render() {
+
+    let percent_style = {display:"flex"}
+
+    
+
+    let progress_btn_style = styles.footerButton;
+    let percentIcon = {}
+
+    if(!this.state.event_selected){
+      percent_style = {display:"none"}
+      progress_btn_style = styles.btn2;
+      percentIcon = {tintColor:Consts.colors.c3}
+    }
+
+
     return (
       <View style={styles.container}>
         {/* Header */}
@@ -92,6 +120,8 @@ export default class Home extends Component {
           <Text style={[styles.textFontStyle, styles.contentText]}>
             نقطه شروع من : تهران
           </Text>
+
+          
           
           <Province
             width={WIDTH * 0.6}
@@ -104,6 +134,8 @@ export default class Home extends Component {
             <Text style={styles.txt1}>{"سفر های این هفته"}</Text>
           </TouchableOpacity>
 
+          <Text style={styles.txt2}>{this.state.city}</Text>
+
         </View>
 
         {/* footer */}
@@ -113,7 +145,7 @@ export default class Home extends Component {
             <SnapShot/>
           </View>
 
-          <TouchableOpacity style={styles.footerButton} onPress={this.onProgress}>
+          <TouchableOpacity disabled={!this.state.event_selected} style={progress_btn_style} onPress={this.onProgress}>
 
               <Animated.Image
                 resizeMode={'contain'}
@@ -123,10 +155,10 @@ export default class Home extends Component {
                   {
                     transform: [{translateY: this.arrowTransY}],
                     opacity: this.arrowOpacity,
-                  },
+                  }, percentIcon
                 ]}
               />
-              <Text style={styles.footerButtonText}>32 %</Text>
+              <Text style={[styles.footerButtonText, percent_style]}>{`${this.state.percent} %`}</Text>
 
           </TouchableOpacity>
         </View>
@@ -156,6 +188,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    elevation:5,
+  },
+
+  btn2:{
+    height:Consts.height*0.1,
+    width: Consts.width*0.8,
+    padding: 10,
+    borderColor: Consts.colors.c3,
+    borderBottomRightRadius: 15,
+    borderBottomLeftRadius: 15,
+    marginBottom: 20,
+    borderWidth:2,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   sec1:{
@@ -178,6 +225,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    elevation:5,
   },
   footerButtonText: {
     color: '#fff',
@@ -227,5 +275,16 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 22,
     fontFamily: 'shabnam',
+  },
+
+  txt2:{
+    position:'absolute',
+    height:'100%',
+    width:'100%',
+    textAlign:'center',
+    textAlignVertical:'center',
+    fontFamily:"shabnam",
+    fontSize:25,
+    color:'rgba(0,0,0,0.2)'
   }
 });
