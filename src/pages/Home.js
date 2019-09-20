@@ -6,6 +6,7 @@ import {
   TouchableNativeFeedback,
   Image,
   Animated,
+  TouchableOpacity
 } from 'react-native';
 import Consts from '../Consts';
 const {width: WIDTH} = Consts;
@@ -39,6 +40,10 @@ export default class Home extends Component {
   onTopUsers = ()=>{
 
     this.props.navigation.navigate("TopUsers")
+  }
+
+  onSelectDestination = ()=>{
+    this.props.navigation.navigate("SelectDestination");
   }
 
   render() {
@@ -81,15 +86,18 @@ export default class Home extends Component {
           <Text style={[styles.textFontStyle, styles.contentText]}>
             مکان فعلی شما: تهران
           </Text>
+          
           <Province
             width={WIDTH * 0.6}
             svgData={Tehran}
             svgProps={{fill: '#c5f0b9', strokeWidth: 1, stroke: '#c5f0b9'}}
             pathAnimation={true}
           />
-          <Text style={[styles.textFontStyle, styles.contentText]}>
-            مسیرت رو انتخاب کن {' ; -)'}
-          </Text>
+
+          <TouchableOpacity style={styles.btn1} onPress={this.onSelectDestination}>
+            <Text style={styles.txt1}>{"سفر های این هفته"}</Text>
+          </TouchableOpacity>
+
         </View>
 
         {/* footer */}
@@ -127,6 +135,18 @@ const styles = StyleSheet.create({
   contentText: {
     fontSize: 22,
   },
+
+  btn1:{
+    height:Consts.height*0.1,
+    width: Consts.width*0.8,
+    backgroundColor: '#6bc94f',
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   footer: {
     flexGrow: 4,
     backgroundColor: '#c5f0b9',
@@ -187,4 +207,10 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     backgroundColor: 'green',
   },
+
+  txt1:{
+    color: '#fff',
+    fontSize: 22,
+    fontFamily: 'shabnam',
+  }
 });

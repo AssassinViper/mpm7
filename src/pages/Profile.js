@@ -15,6 +15,9 @@ import c6 from '../assets/images/c6.png';
 import c7 from '../assets/images/c7.png';
 import c8 from '../assets/images/c8.png';
 import CarSelect from './CarSelect';
+import Realm from '../db/realm';
+
+const Cars = {c1,c2,c3,c4,c5,c6,c7,c8};
 
 export default class Profile extends Component {
 
@@ -24,6 +27,16 @@ export default class Profile extends Component {
 
         this.state.dialog = true;
         this.setState(this.state);
+    }
+
+    changeCar = (cb)=>{
+
+        let realm = Realm.getRealm();
+        let user = realm.objects("User")[0];
+
+        this.state.car = Cars[user.car];
+
+        this.setState(this.state, cb);
     }
 
     dismiss = ()=>{
@@ -53,7 +66,7 @@ export default class Profile extends Component {
                     <View style={s.sec2}>
 
                         <TouchableOpacity style={s.btn1} onPress={this.selectCar}>
-                            <Image style={s.img1} source={c1} resizeMode="contain"/>
+                            <Image style={s.img1} source={this.state.car} resizeMode="contain"/>
                         </TouchableOpacity>
                         
                         <Text style={s.text1}>{"رضا مارمولک"}</Text>
@@ -87,11 +100,34 @@ export default class Profile extends Component {
                 
 
                 <Dialog visible={this.state.dialog} animationDuration={600} dialogAnimation={new SlideAnimation()}>
-                    <CarSelect onClose={this.dismiss}/>
+                    <CarSelect onClose={this.dismiss} changeCar={this.changeCar}/>
                 </Dialog>
             </View>
         )
     }
+}
+
+const car2Image = (name)=>{
+
+    let pic;
+
+    switch(name){
+
+        case"c1":
+            pic = c1;
+            break;
+
+        case"c2":
+            pic = c2;
+            break;
+        
+        case"c3":
+        pic = c3;
+        break;
+    }
+
+    alert(pic)
+    return pic;
 }
 
 let {height, width} = Consts;
