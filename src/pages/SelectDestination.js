@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import {View, Dimensions, StyleSheet} from 'react-native';
-import Animated from 'react-native-reanimated';
+import {View, Dimensions, StyleSheet, Animated} from 'react-native';
 import Province from '../components/Provinces/Province';
 import {
   Guilan,
   Lorestan,
   WestAzarbayjan,
 } from '../components/Provinces/SvgData';
+import PlaceDescription from '../components/PlaceDescription';
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
-const {Value, event, interpolate} = Animated;
+const {Value, event} = Animated;
 const svgProps = {
   fill: '#c5f0b9',
   fillOpacity: 1,
@@ -27,9 +27,9 @@ export class SelectDestination extends Component {
     this.scrollX = new Value(0);
     this.onScrollEventHandler = event(
       [{nativeEvent: {contentOffset: {x: this.scrollX}}}],
-      {useNativeDriver: true},
+      
     );
-    this.indicatorWidth = interpolate(this.scrollX, {
+    this.indicatorWidth = this.scrollX.interpolate({
       inputRange: [
         0,
         WIDTH / 2,
@@ -42,7 +42,7 @@ export class SelectDestination extends Component {
       outputRange: [IS, IS * IJS, IS, IS * IJS, IS, IS * IJS, IS],
     });
 
-    this.indicatorOffsetX = interpolate(this.scrollX, {
+    this.indicatorOffsetX = this.scrollX.interpolate({
       inputRange: [0, WIDTH, 2 * WIDTH, 3 * WIDTH],
       outputRange: [
         0,
@@ -90,7 +90,11 @@ export class SelectDestination extends Component {
             </View>
 
             {/* bottom view of descriptions */}
-            <View style={styles.scrollViewBottom}></View>
+            <View style={styles.scrollViewBottom}>
+              <View style={styles.descriptionContainer}>
+                <PlaceDescription />
+              </View>
+            </View>
           </View>
         </Animated.ScrollView>
         <View
@@ -115,7 +119,7 @@ export class SelectDestination extends Component {
               height: IS,
               borderRadius: IS / 2,
               margin: 5,
-              backgroundColor: 'red',
+              backgroundColor: 'green',
               position: 'absolute',
               top: IS - 0.5 * ISS,
               transform: [{translateX: this.indicatorOffsetX}],
@@ -145,18 +149,24 @@ const styles = StyleSheet.create({
   scrollViewBottom: {
     width: '100%',
     flexDirection: 'row',
-    backgroundColor: 'yellow',
+    // backgroundColor: 'yellow',
     flexGrow: 2,
   },
   item: {
     width: WIDTH,
     alignItems: 'center',
   },
+  descriptionContainer: {
+    padding: 15,
+    width: WIDTH,
+    backgroundColor: 'transparent',
+    paddingLeft: 30,
+  },
   indicatorShell: {
     width: ISS,
     height: ISS,
     borderRadius: ISS / 2,
-    borderColor: '#000',
+    borderColor: '#c5f0b9',
     borderWidth: 1,
     position: 'absolute',
     top: IS - 0.5 * ISS,
