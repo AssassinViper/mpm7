@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 import {createBottomTabNavigator, createAppContainer} from 'react-navigation';
 import Home from './pages/Home';
 import Loading from './pages/Loading';
-import StateSelect from './pages/StateSelect';
+import StateSelect from './pages/SelectDestination';
 import Register from './pages/Register';
 import Verification from './pages/Verification';
 import TopUsers from './pages/TopUsers';
@@ -15,19 +15,19 @@ class emptyView extends React.Component {
   }
 }
 
-const Navigator = createBottomTabNavigator({
-
-  Loading,
-  Home,
-  Register,
-  Verification,
-  TopUsers,
-  Profile,
-
-},{
-        
-  initialRouteName:'Loading',
-  /*navigationOptions:{
+const Navigator = createBottomTabNavigator(
+  {
+    StateSelect,
+    Loading,
+    Home,
+    Register,
+    Verification,
+    TopUsers,
+    Profile,
+  },
+  {
+    initialRouteName: 'Loading',
+    /*navigationOptions:{
       headerStyle:{height:0, opacity:0}
   },*/
     headerLayoutPreset: false,
