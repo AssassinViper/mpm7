@@ -30,7 +30,7 @@ export default class SnapShot extends Component {
       
       this.interval = setInterval(() => {
         if (this.state.progress < 100) {
-          this.state.progress += 0.2
+          this.state.progress += Consts.speed
           //0.15
           Controller.controller.Home_changePercent(
             Math.floor(this.state.progress),
