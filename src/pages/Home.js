@@ -64,7 +64,8 @@ export default class Home extends Component {
     this.state.event = user.event;
     this.state.map = event2map(this.state.event);
     this.state.percent = 0;
-    Controller.controller.SnapShot.change_percent(0)
+    Controller.controller.SnapShot.change_percent(0);
+    Controller.controller.progress_changeEvent(user.event);
     this.state.event_selected = true;
 
     this.setState(this.state);

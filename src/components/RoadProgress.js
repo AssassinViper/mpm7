@@ -1,5 +1,5 @@
 import React from 'react';
-import {Svg, G, Path, Circle, Text, Image} from 'react-native-svg';
+import {Svg, G, Path, Circle, Image, Text} from 'react-native-svg';
 import RN, {View, Animated, Easing} from 'react-native';
 import {svgPathProperties} from 'svg-path-properties';
 
@@ -12,6 +12,7 @@ import c5 from '../assets/images/c5.png';
 import c6 from '../assets/images/c6.png';
 import c7 from '../assets/images/c7.png';
 import c8 from '../assets/images/c8.png';
+import Realm from '../db/realm';
 const {Text: Label} = RN;
 const CAR_WIDTH = 50;
 const CAR_HEIGHT = 40;
@@ -26,6 +27,7 @@ const snapPoints = {
 const Cars = {c1, c2, c3, c4, c5, c6, c7, c8};
 
 class RoadProgress extends React.Component {
+
   constructor(props) {
     super(props);
     this.path =
@@ -35,28 +37,43 @@ class RoadProgress extends React.Component {
     this.pathTotalLength = this.pathProps.getTotalLength();
     this.carMoveAnim = new Animated.Value(0);
     this.carRef = React.createRef();
-    this.state = {unlockedMissions: 0, car: c1};
+    this.state = {unlockedMissions: 0, car: c1, city:"تهران", event:"گیلان"};
 
     Controller.controller.progress_changeCar = this.changeCar;
     Controller.controller.progress_moveCar = this.moveCar;
+    Controller.controller.progress_changeEvent = this.changeEvent;
   }
 
   componentDidMount() {
+
+    let realm = Realm.getRealm();
+    let user = realm.objects("User")[0];
+
+    this.state.city = user.city;
+    this.state.event = user.event;
+
+    this.changeCar(user.car);
+
+    
     // const {pathProps, carRef} = this;
-    this.carMoveAnim.addListener(({value}) => {
-      this.moveCar(value / this.pathTotalLength);
-    });
-    Animated.timing(this.carMoveAnim, {
-      toValue: this.pathTotalLength,
-      duration: 5 * 1000,
-      easing: Easing.linear,
-    }).start();
+    // this.carMoveAnim.addListener(({value}) => {
+    //   this.moveCar(value / this.pathTotalLength);
+    // });
+    // Animated.timing(this.carMoveAnim, {
+    //   toValue: this.pathTotalLength,
+    //   duration: 5 * 1000,
+    //   easing: Easing.linear,
+    // }).start();
     // this.moveCar(1);
   }
 
   changeCar = id => {
     this.setState({car: Cars[id]});
   };
+
+  changeEvent = (event)=>{
+    this.setState({event});
+  }
 
   moveCar = percent => {
     const value = percent * (this.pathTotalLength - 130) + 50;
@@ -88,7 +105,7 @@ class RoadProgress extends React.Component {
         <Svg
           style={{borderWidth: 0, borderColor: 'blue'}}
           width={'100%'}
-          height={'90%'}
+          height={'100%'}
           viewBox="0 0 500 500"
           xmlSpace="preserve">
           <Path
@@ -142,14 +159,14 @@ class RoadProgress extends React.Component {
               r={16.8}
             />
           </G>
-          <G fill={'#00f'} transform="translate(225.538 422.464)">
+          {/* <G fill={'#00f'} transform="translate(225.538 422.464)">
             <Label style={{fontSize: 20}}>{origin}</Label>
-          </G>
+          </G> */}
           <G fontSize={35}>
             <Circle cx={275} cy={520} r={45} fill={'#d21358'} />
 
             <Circle cx={265} cy={-20} r={45} fill={'#6fc94d'} />
-            <Label style={{}}>{destination}</Label>
+            {/* <Label style={{}}>{destination}</Label> */}
           </G>
           <G
             fill={'#fff'}
@@ -164,7 +181,7 @@ class RoadProgress extends React.Component {
           </G>
           <Image
             ref={this.carRef}
-            href={carIcon}
+            href={this.state.car}
             width={CAR_WIDTH}
             height={CAR_HEIGHT}
             transform={`translate(${CAR_WIDTH / 2} ${CAR_HEIGHT /
@@ -175,6 +192,8 @@ class RoadProgress extends React.Component {
             // rotation={carAngle}
           />
         </Svg>
+
+        <Label style={{position:"absolute", fontFamily:'shabnam', textAlign:'center', top:20, width:'100%', fontSize:25}}>{"حرکت از "+ this.state.city+" به سمت "+this.state.event}</Label>
       </View>
     );
   }

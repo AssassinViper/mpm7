@@ -29,6 +29,7 @@ export default class Profile extends Component {
         let realm = Realm.getRealm();
         let user = realm.objects("User")[0];
         this.state.name = user.full_name;
+        this.state.car = Cars[user.car]
         this.setState(this.state);
     }
 
@@ -42,6 +43,10 @@ export default class Profile extends Component {
 
         let realm = Realm.getRealm();
         let user = realm.objects("User")[0];
+
+        if(Controller.controller.progress_changeCar != undefined){
+            Controller.controller.progress_changeCar(user.car);
+          }
 
         this.state.car = Cars[user.car];
 

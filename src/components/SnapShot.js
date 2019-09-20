@@ -35,6 +35,10 @@ export default class SnapShot extends Component {
           Controller.controller.Home_changePercent(
             Math.floor(this.state.progress),
           );
+
+          if(Controller.controller.progress_moveCar != undefined){
+            Controller.controller.progress_moveCar(this.state.progress/100);
+          }
           
           this.setData();
         }
