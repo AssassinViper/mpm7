@@ -42,9 +42,9 @@ const content = "اگر قصد قدم زدن در یک مکان دنج و پر �
 
 const styles = StyleSheet.create({
   container: {
+    height:'100%',
     width: '80%',
-    flexGrow: 1,
-    borderRadius: 40,
+    borderRadius: 35,
     backgroundColor: '#172121',
     overflow: 'visible',
   },
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     borderRadius: IMAGE_SIZE / 2,
     overflow: 'hidden',
     position: 'absolute',
-    bottom: '12%',
+    bottom: Consts.height*0.3,
     padding: 8,
     right: -IMAGE_SIZE / 2.5,
   },

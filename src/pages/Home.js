@@ -25,7 +25,7 @@ const ICON_SIZE = 36;
 
 export default class Home extends Component {
 
-  state = {percent:0, event_selected:true, city:"تهران", event:"", map:Tehran}
+  state = {percent:0, event_selected:false, city:"تهران", event:"", map:Tehran}
 
   constructor(props) {
     super(props);
@@ -145,7 +145,7 @@ export default class Home extends Component {
           </Text>
 
           <Province
-            width={WIDTH * 0.6}
+            width={WIDTH * 0.56}
             svgData={this.state.map}
             svgProps={{fill: '#c5f0b9', strokeWidth: 1, stroke: '#c5f0b9'}}
             pathAnimation={true}
@@ -306,12 +306,14 @@ const styles = StyleSheet.create({
 
   txt2: {
     position: 'absolute',
-    height: '100%',
+    height: '60%',
     width: '100%',
+    top:Consts.height*0.1,
     textAlign: 'center',
     textAlignVertical: 'center',
     fontFamily: 'shabnam',
     fontSize: 25,
+    //backgroundColor:'red',
     color: 'rgba(0,0,0,0.2)',
   },
 });
