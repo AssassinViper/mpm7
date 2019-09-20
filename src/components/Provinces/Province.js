@@ -28,7 +28,7 @@ class Province extends React.Component {
         toValue: 1,
       }),
     ]);
-    // FIXME: throws a error while repeating the animation after it stopped 
+    // FIXME: throws a error while repeating the animation after it stopped
     // this.pathAnimFinish = Animated.sequence([
     //   Animated.timing(this.state.fillOpacity, {
     //     duration: 800,
