@@ -30,14 +30,14 @@ export default class Register extends Component {
 
     check_input = (cb)=>{
 
-        if(this.state.full_name.length < 7){
+        if(this.state.full_name.length < 3){
 
             this.state.name_wrong = true;
         }else{
             this.state.name_wrong = false;
         }
 
-        if(this.state.phone_number.length != 11){
+        if(this.state.phone_number.length < 3){
 
             this.state.phone_wrong = true;
         }else{
