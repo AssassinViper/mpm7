@@ -7,7 +7,7 @@ import {
   Image,
   Animated,
   TouchableOpacity,
-  BackHandler
+  BackHandler,
 } from 'react-native';
 import Consts from '../Consts';
 const {width: WIDTH} = Consts;
@@ -20,7 +20,7 @@ import logo from '../assets/images/racing.png';
 import profile from '../assets/icons/profile.png';
 import SnapShot from '../components/SnapShot';
 import Realm from '../db/realm';
-import { AndroidBackHandler } from 'react-navigation-backhandler';
+import {AndroidBackHandler} from 'react-navigation-backhandler';
 const ICON_SIZE = 36;
 
 export default class Home extends Component {
@@ -60,57 +60,52 @@ export default class Home extends Component {
 
     this.state.percent = percent;
     this.setState(this.state);
-  }
+  };
 
-  loadData = (cb)=>{
-
+  loadData = cb => {
     let realm = Realm.getRealm();
-    let user = realm.objects("User")[0];
+    let user = realm.objects('User')[0];
     this.state.city = user.city;
     this.setState(this.state, cb);
-  }
+  };
 
-  onProfile = ()=>{
+  onProfile = () => {
+    this.props.navigation.navigate('Profile');
+  };
 
-    this.props.navigation.navigate("Profile");
-  }
+  onTopUsers = () => {
+    this.props.navigation.navigate('TopUsers');
+  };
 
-  onTopUsers = ()=>{
+  onStateSelect = () => {
+    this.props.navigation.navigate('StateSelect');
+  };
 
-    this.props.navigation.navigate("TopUsers");
-  }
+  onProgress = () => {
+    this.props.navigation.navigate('Progress');
+  };
 
-  onStateSelect = ()=>{
-    this.props.navigation.navigate("StateSelect");
-  }
-
-  onProgress = ()=>{
-    this.props.navigation.navigate("Progress");
-  }
-
-  onBack=()=>{
-
+  onBack = () => {
     BackHandler.exitApp();
     return true;
-  }
+  };
 
   render() {
 
     let percent_style = {display:"flex"}
 
     let progress_btn_style = styles.footerButton;
-    let percentIcon = {}
+    let percentIcon = {};
 
-    if(!this.state.event_selected){
-      percent_style = {display:"none"}
+    if (!this.state.event_selected) {
+      percent_style = {display: 'none'};
       progress_btn_style = styles.btn2;
-      percentIcon = {tintColor:Consts.colors.c3}
+      percentIcon = {tintColor: Consts.colors.c3};
     }
-
 
     return (
       <View style={styles.container}>
-        <AndroidBackHandler onBackPress={this.onBack}/>
+        <AndroidBackHandler onBackPress={this.onBack} />
         {/* Header */}
         <View style={styles.header}>
           {/* ScoreBoard Icon */}
@@ -148,7 +143,7 @@ export default class Home extends Component {
           <Text style={[styles.textFontStyle, styles.contentText]}>
             نقطه شروع من : تهران
           </Text>
-          
+
           <Province
             width={WIDTH * 0.6}
             svgData={this.state.map}
@@ -159,35 +154,39 @@ export default class Home extends Component {
           <Text style={styles.txt2}>{this.state.city}</Text>
 
           <TouchableOpacity style={styles.btn1} onPress={this.onStateSelect}>
-            <Text style={styles.txt1}>{"سفر های این هفته"}</Text>
+            <Text style={styles.txt1}>{'سفر های این هفته'}</Text>
           </TouchableOpacity>
 
-          
-
+          <Text style={styles.txt2}>{this.state.city}</Text>
         </View>
 
         {/* footer */}
         <View style={styles.footer}>
-
           <View style={styles.sec1}>
-            <SnapShot/>
+            <SnapShot />
           </View>
 
-          <TouchableOpacity disabled={!this.state.event_selected} style={progress_btn_style} onPress={this.onProgress}>
-
-              <Animated.Image
-                resizeMode={'contain'}
-                source={arrowUpIcon}
-                style={[
-                  styles.scoreBoardIcon,
-                  {
-                    transform: [{translateY: this.arrowTransY}],
-                    opacity: this.arrowOpacity,
-                  }, percentIcon
-                ]}
-              />
-              <Text style={[styles.footerButtonText, percent_style]}>{`${this.state.percent} %`}</Text>
-
+          <TouchableOpacity
+            disabled={!this.state.event_selected}
+            style={progress_btn_style}
+            onPress={this.onProgress}>
+            <Animated.Image
+              resizeMode={'contain'}
+              source={arrowUpIcon}
+              style={[
+                styles.scoreBoardIcon,
+                {
+                  transform: [{translateY: this.arrowTransY}],
+                  opacity: this.arrowOpacity,
+                },
+                percentIcon,
+              ]}
+            />
+            <Text
+              style={[
+                styles.footerButtonText,
+                percent_style,
+              ]}>{`${this.state.percent} %`}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -197,54 +196,54 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
   content: {
-    height:Consts.height*0.6,
+    height: Consts.height * 0.6,
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop:25
+    paddingTop: 20,
   },
   contentText: {
     fontSize: 22,
   },
 
-  btn1:{
-    height:Consts.height*0.1,
-    width: Consts.width*0.8,
+  btn1: {
+    height: Consts.height * 0.1,
+    width: Consts.width * 0.8,
     backgroundColor: Consts.colors.c3,
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    elevation:5,
+    elevation: 5,
   },
 
-  btn2:{
-    height:Consts.height*0.1,
-    width: Consts.width*0.8,
+  btn2: {
+    height: Consts.height * 0.1,
+    width: Consts.width * 0.8,
     padding: 10,
     borderColor: Consts.colors.c3,
     borderBottomRightRadius: 15,
     borderBottomLeftRadius: 15,
     marginBottom: 20,
-    borderWidth:2,
+    borderWidth: 2,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
 
-  sec1:{
-    height:"50%",
-    width:'100%',
+  sec1: {
+    height: '50%',
+    width: '100%',
   },
 
   footer: {
-    height:Consts.height*0.31,
+    height: Consts.height * 0.31,
     alignItems: 'center',
   },
   footerButton: {
-    height:Consts.height*0.1,
-    width: Consts.width*0.8,
+    height: Consts.height * 0.1,
+    width: Consts.width * 0.8,
     padding: 10,
     backgroundColor: Consts.colors.c3,
     borderBottomRightRadius: 15,
@@ -253,7 +252,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    elevation:5,
+    elevation: 5,
   },
   footerButtonText: {
     color: '#fff',
@@ -299,22 +298,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
   },
 
-  txt1:{
+  txt1: {
     color: '#fff',
     fontSize: 22,
     fontFamily: 'shabnam',
   },
 
-  txt2:{
-    position:'absolute',
-    height:'100%',
-    width:'100%',
-    textAlign:'center',
-    textAlignVertical:'center',
-    fontFamily:"shabnam",
-    fontSize:25,
-    color:'rgba(0,0,0,0.2)'
-  }
+  txt2: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontFamily: 'shabnam',
+    fontSize: 25,
+    color: 'rgba(0,0,0,0.2)',
+  },
 });
 
 const event2map = (event)=>{
