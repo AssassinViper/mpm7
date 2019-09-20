@@ -16,6 +16,7 @@ import c7 from '../assets/images/c7.png';
 import c8 from '../assets/images/c8.png';
 import CarSelect from './CarSelect';
 import Realm from '../db/realm';
+import Controller from '../Controller';
 
 const Cars = {c1,c2,c3,c4,c5,c6,c7,c8};
 
@@ -35,6 +36,10 @@ export default class Profile extends Component {
         let user = realm.objects("User")[0];
 
         this.state.car = Cars[user.car];
+
+        if(Controller.controller.SnapShot){
+            Controller.controller.SnapShot.setData();
+        }
 
         this.setState(this.state, cb);
     }

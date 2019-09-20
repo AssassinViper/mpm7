@@ -17,6 +17,8 @@ import scoreboardIcon from '../assets/images/scoreboard.png';
 import arrowUpIcon from '../assets/images/arrow_up.png';
 import logo from '../assets/images/racing.png';
 import profile from '../assets/icons/profile.png';
+import SnapShot from '../components/SnapShot';
+import Realm from '../db/realm';
 const ICON_SIZE = 36;
 
 export default class Home extends Component {
@@ -27,23 +29,27 @@ export default class Home extends Component {
   }
   componentDidMount() {
     Animated.stagger(0, [
-      Animated.timing(this.arrowOpacity, {toValue: 1, duration: 600}),
-      Animated.timing(this.arrowTransY, {toValue: 0, duration: 500}),
+      Animated.timing(this.arrowOpacity, {toValue: 1, duration: 800}),
+      Animated.timing(this.arrowTransY, {toValue: 0, duration: 700}),
     ]).start();
   }
 
   onProfile = ()=>{
 
-    this.props.navigation.navigate("Profile")
+    this.props.navigation.navigate("Profile");
   }
 
   onTopUsers = ()=>{
 
-    this.props.navigation.navigate("TopUsers")
+    this.props.navigation.navigate("TopUsers");
   }
 
-  onSelectDestination = ()=>{
-    this.props.navigation.navigate("SelectDestination");
+  onStateSelect = ()=>{
+    this.props.navigation.navigate("StateSelect");
+  }
+
+  onProgress = ()=>{
+    this.props.navigation.navigate("Progress");
   }
 
   render() {
@@ -84,7 +90,7 @@ export default class Home extends Component {
         {/* main center content */}
         <View style={styles.content}>
           <Text style={[styles.textFontStyle, styles.contentText]}>
-            مکان فعلی شما: تهران
+            نقطه شروع من : تهران
           </Text>
           
           <Province
@@ -94,7 +100,7 @@ export default class Home extends Component {
             pathAnimation={true}
           />
 
-          <TouchableOpacity style={styles.btn1} onPress={this.onSelectDestination}>
+          <TouchableOpacity style={styles.btn1} onPress={this.onStateSelect}>
             <Text style={styles.txt1}>{"سفر های این هفته"}</Text>
           </TouchableOpacity>
 
@@ -102,8 +108,13 @@ export default class Home extends Component {
 
         {/* footer */}
         <View style={styles.footer}>
-          <TouchableNativeFeedback>
-            <View style={styles.footerButton}>
+
+          <View style={styles.sec1}>
+            <SnapShot/>
+          </View>
+
+          <TouchableOpacity style={styles.footerButton} onPress={this.onProgress}>
+
               <Animated.Image
                 resizeMode={'contain'}
                 source={arrowUpIcon}
@@ -116,8 +127,8 @@ export default class Home extends Component {
                 ]}
               />
               <Text style={styles.footerButtonText}>32 %</Text>
-            </View>
-          </TouchableNativeFeedback>
+
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -126,11 +137,11 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
   content: {
-    flexGrow: 5,
+    height:Consts.height*0.6,
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    // backgroundColor: 'blue',
+    paddingTop:20,
   },
   contentText: {
     fontSize: 22,
@@ -139,7 +150,7 @@ const styles = StyleSheet.create({
   btn1:{
     height:Consts.height*0.1,
     width: Consts.width*0.8,
-    backgroundColor: '#6bc94f',
+    backgroundColor: Consts.colors.c3,
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
     flexDirection: 'row',
@@ -147,16 +158,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  sec1:{
+    height:"50%",
+    width:'100%',
+  },
+
   footer: {
-    flexGrow: 4,
-    backgroundColor: '#c5f0b9',
-    justifyContent: 'flex-end',
+    height:Consts.height*0.31,
     alignItems: 'center',
   },
   footerButton: {
-    width: '80%',
+    height:Consts.height*0.1,
+    width: Consts.width*0.8,
     padding: 10,
-    backgroundColor: '#6bc94f',
+    backgroundColor: Consts.colors.c3,
     borderBottomRightRadius: 15,
     borderBottomLeftRadius: 15,
     marginBottom: 20,

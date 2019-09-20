@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import Verification from './pages/Verification';
 import TopUsers from './pages/TopUsers';
 import Profile from './pages/Profile';
+import Progress from './pages/Progress';
 
 class emptyView extends React.Component {
   render() {
@@ -24,9 +25,10 @@ const Navigator = createBottomTabNavigator(
     Verification,
     TopUsers,
     Profile,
+    Progress,
   },
   {
-    initialRouteName: 'StateSelect',
+    initialRouteName: 'Loading',
     /*navigationOptions:{
       headerStyle:{height:0, opacity:0}
   },*/
