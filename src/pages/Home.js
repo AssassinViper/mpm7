@@ -8,12 +8,18 @@ import {
   Animated,
   TouchableOpacity,
   BackHandler,
+  TextInput,
 } from 'react-native';
 import Consts from '../Consts';
-const {width: WIDTH} = Consts;
+const {width: WIDTH, height: HEIGHT} = Consts;
 import Controller from '../Controller';
 import Province from '../components/Provinces/Province';
-import {Tehran, Guilan, WestAzarbayjan, Lorestan} from '../components/Provinces/SvgData';
+import {
+  Tehran,
+  Guilan,
+  WestAzarbayjan,
+  Lorestan,
+} from '../components/Provinces/SvgData';
 import scoreboardIcon from '../assets/images/scoreboard.png';
 import arrowUpIcon from '../assets/images/arrow_up.png';
 import logo from '../assets/images/racing.png';
@@ -24,8 +30,14 @@ import {AndroidBackHandler} from 'react-navigation-backhandler';
 const ICON_SIZE = 36;
 
 export default class Home extends Component {
-
-  state = {percent:0, event_selected:false, city:"تهران", event:"", map:Tehran}
+  state = {
+    percent: 0,
+    event_selected: false,
+    city: 'تهران',
+    event: '',
+    map: Tehran,
+  };
+  percentText = React.createRef();
 
   constructor(props) {
     super(props);
@@ -48,7 +60,7 @@ export default class Home extends Component {
     alert("1");
     
     let realm = Realm.getRealm();
-    let user = realm.objects("User")[0];
+    let user = realm.objects('User')[0];
 
     this.state.event = user.event;
     this.state.map = event2map(this.state.event);
@@ -58,12 +70,10 @@ export default class Home extends Component {
     alert(this.state.event)
 
     this.setState(this.state);
-  }
+  };
 
-  changePercent = (percent)=>{
-
-    this.state.percent = percent;
-    this.setState(this.state);
+  changePercent = percent => {
+    this.percentText.current.setNativeProps({text: percent + ' %'});
   };
 
   loadData = cb => {
@@ -95,14 +105,15 @@ export default class Home extends Component {
   };
 
   render() {
-
-    let percent_style = {display:"flex"}
+    let percent_style = {display: 'flex'};
 
     let progress_btn_style = styles.footerButton;
     let percentIcon = {};
 
     if (!this.state.event_selected) {
-      percent_style = {display: 'none'};
+      percent_style = {
+        display: 'none',
+      };
       progress_btn_style = styles.btn2;
       percentIcon = {tintColor: Consts.colors.c3};
     }
@@ -149,8 +160,8 @@ export default class Home extends Component {
           </Text>
 
           <Province
-            width={WIDTH * 0.56}
-            svgData={this.state.map}
+            height={HEIGHT * 0.25}
+            svgData={Tehran}
             svgProps={{fill: '#c5f0b9', strokeWidth: 1, stroke: '#c5f0b9'}}
             pathAnimation={true}
           />
@@ -186,11 +197,11 @@ export default class Home extends Component {
                 percentIcon,
               ]}
             />
-            <Text
-              style={[
-                styles.footerButtonText,
-                percent_style,
-              ]}>{`${this.state.percent} %`}</Text>
+            <TextInput
+              editable={false}
+              ref={this.percentText}
+              style={[styles.footerButtonText, percent_style]}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -261,8 +272,10 @@ const styles = StyleSheet.create({
   footerButtonText: {
     color: '#fff',
     fontSize: 22,
+    padding: 0,
     fontFamily: 'shabnam',
     marginLeft: 10,
+    textAlign: 'center',
   },
   container: {
     height: '100%',
@@ -312,7 +325,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: '60%',
     width: '100%',
-    top:Consts.height*0.1,
+    top: Consts.height * 0.1,
     textAlign: 'center',
     textAlignVertical: 'center',
     fontFamily: 'shabnam',
@@ -322,14 +335,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const event2map = (event)=>{
-
-  switch(event){
-
-    case"تهران":return Tehran;
-    case"گیلان":return Guilan;
-    case"لرستان":return Lorestan;
-    case"آذربایجان غربی":return WestAzarbayjan;
-    default: return Tehran;
+const event2map = event => {
+  switch (event) {
+    case 'تهران':
+      return Tehran;
+    case 'گیلان':
+      return Guilan;
+    case 'لرستان':
+      return Lorestan;
+    case 'آذربایجان غربی':
+      return WestAzarbayjan;
+    default:
+      return Tehran;
   }
-}
+};
