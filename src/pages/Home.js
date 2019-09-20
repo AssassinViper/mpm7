@@ -8,9 +8,10 @@ import {
   Animated,
   TouchableOpacity,
   BackHandler,
+  TextInput,
 } from 'react-native';
 import Consts from '../Consts';
-const {width: WIDTH} = Consts;
+const {width: WIDTH, height: HEIGHT} = Consts;
 import Controller from '../Controller';
 import Province from '../components/Provinces/Province';
 import {Tehran} from '../components/Provinces/SvgData';
@@ -25,6 +26,7 @@ const ICON_SIZE = 36;
 
 export default class Home extends Component {
   state = {percent: 0, event_selected: true, city: 'تهران'};
+  percentText = React.createRef();
 
   constructor(props) {
     super(props);
@@ -42,8 +44,9 @@ export default class Home extends Component {
   }
 
   changePercent = percent => {
-    this.state.percent = percent;
-    this.setState(this.state);
+    this.percentText.current.setNativeProps({text: percent + ' %'});
+    // this.state.percent = percent;
+    // this.setState(this.state);
   };
 
   loadData = cb => {
@@ -75,14 +78,18 @@ export default class Home extends Component {
   };
 
   render() {
-
-    let percent_style = {display:"flex"}
+    let percent_style = {display: 'flex'};
 
     let progress_btn_style = styles.footerButton;
     let percentIcon = {};
 
     if (!this.state.event_selected) {
-      percent_style = {display: 'none'};
+      percent_style = {
+        height: '100%',
+        borderWidth: 1,
+        borderColor: '#000',
+        backgroundColor: 'red',
+      };
       progress_btn_style = styles.btn2;
       percentIcon = {tintColor: Consts.colors.c3};
     }
@@ -129,7 +136,7 @@ export default class Home extends Component {
           </Text>
 
           <Province
-            width={WIDTH * 0.6}
+            height={ HEIGHT * 0.25}
             svgData={Tehran}
             svgProps={{fill: '#c5f0b9', strokeWidth: 1, stroke: '#c5f0b9'}}
             pathAnimation={true}
@@ -166,11 +173,11 @@ export default class Home extends Component {
                 percentIcon,
               ]}
             />
-            <Text
-              style={[
-                styles.footerButtonText,
-                percent_style,
-              ]}>{`${this.state.percent} %`}</Text>
+            <TextInput
+              editable={false}
+              ref={this.percentText}
+              style={[styles.footerButtonText, percent_style]}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -241,8 +248,10 @@ const styles = StyleSheet.create({
   footerButtonText: {
     color: '#fff',
     fontSize: 22,
+    padding: 0,
     fontFamily: 'shabnam',
     marginLeft: 10,
+    textAlign: 'center',
   },
   container: {
     height: '100%',

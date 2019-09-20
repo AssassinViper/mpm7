@@ -21,7 +21,7 @@ const svgProps = {
   stroke: '#000',
   strokeWidth: 1,
 };
-const PROVINCE_WIDTH = WIDTH * 0.4;
+const PROVINCE_HEIGHT = HEIGHT * 0.2;
 const IS = 10; // Indicator Size
 const ISS = 2 * IS; // indicator shell size
 const IJS = 5; // indicator jump size
@@ -58,18 +58,16 @@ export class SelectDestination extends Component {
     });
   }
 
-  onBack = ()=>{
-
-    this.props.navigation.navigate("Home");
+  onBack = () => {
+    this.props.navigation.navigate('Home');
     return true;
-  }
+  };
 
   render() {
     return (
       <View style={styles.container}>
-
-        <AndroidBackHandler onBackPress={this.onBack}/>
-        <Header title="انتخاب مقصد" onBack={this.onBack}/>
+        <AndroidBackHandler onBackPress={this.onBack} />
+        <Header title="انتخاب مقصد" onBack={this.onBack} />
 
         <Animated.ScrollView
           horizontal={true}
@@ -84,21 +82,21 @@ export class SelectDestination extends Component {
             <View style={styles.scrollViewTop}>
               <View style={styles.item}>
                 <Province
-                  width={PROVINCE_WIDTH}
+                  height={PROVINCE_HEIGHT}
                   svgProps={svgProps}
                   svgData={Guilan}
                 />
               </View>
               <View style={styles.item}>
                 <Province
-                  width={PROVINCE_WIDTH}
+                  height={PROVINCE_HEIGHT}
                   svgProps={svgProps}
                   svgData={Lorestan}
                 />
               </View>
               <View style={styles.item}>
                 <Province
-                  width={PROVINCE_WIDTH}
+                  height={PROVINCE_HEIGHT}
                   svgProps={svgProps}
                   svgData={WestAzarbayjan}
                 />
@@ -108,13 +106,25 @@ export class SelectDestination extends Component {
             {/* bottom view of descriptions */}
             <View style={styles.scrollViewBottom}>
               <View style={styles.descriptionContainer}>
-                <PlaceDescription pic={event1} city="گیلان" place="پارک ملت رشت"/>
+                <PlaceDescription
+                  pic={event1}
+                  city="گیلان"
+                  place="پارک ملت رشت"
+                />
               </View>
               <View style={styles.descriptionContainer}>
-                <PlaceDescription pic={event2} city="لرستان" place="قلعه فلک الافلاک"/>
+                <PlaceDescription
+                  pic={event2}
+                  city="لرستان"
+                  place="قلعه فلک الافلاک"
+                />
               </View>
               <View style={styles.descriptionContainer}>
-                <PlaceDescription pic={event3}  city="آذربایجان غربی" place="تخت سلیمان"/>
+                <PlaceDescription
+                  pic={event3}
+                  city="آذربایجان غربی"
+                  place="تخت سلیمان"
+                />
               </View>
             </View>
           </View>
@@ -180,10 +190,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   descriptionContainer: {
-    height:"100%",
+    height: '100%',
     padding: 15,
     width: WIDTH,
-    backgroundColor:'transparent',
+    backgroundColor: 'transparent',
     paddingLeft: 30,
   },
   indicatorShell: {
