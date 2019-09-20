@@ -11,7 +11,13 @@ export default class PlaceDescription extends Component {
   onSelect = ()=>{
 
     let realm = Realm.getRealm();
-
+    let user = realm.objects("User");
+    realm.write(()=>{
+      
+      user.event = this.props.city;
+      
+      Controller.controller.Home_onChangeEvent();
+    });
   }
 
   render() {

@@ -13,7 +13,7 @@ import Consts from '../Consts';
 const {width: WIDTH} = Consts;
 import Controller from '../Controller';
 import Province from '../components/Provinces/Province';
-import {Tehran} from '../components/Provinces/SvgData';
+import {Tehran, Guilan, WestAzarbayjan, Lorestan} from '../components/Provinces/SvgData';
 import scoreboardIcon from '../assets/images/scoreboard.png';
 import arrowUpIcon from '../assets/images/arrow_up.png';
 import logo from '../assets/images/racing.png';
@@ -25,11 +25,12 @@ const ICON_SIZE = 36;
 
 export default class Home extends Component {
 
-  state = {percent:0, event_selected:true, city:"تهران"}
+  state = {percent:0, event_selected:true, city:"تهران", event:"", map:Tehran}
 
   constructor(props) {
     super(props);
     Controller.controller.Home_changePercent = this.changePercent;
+    Controller.controller.Home_onChangeEvent = this.onChangeEvent;
     this.arrowOpacity = new Animated.Value(0);
     this.arrowTransY = new Animated.Value(20);
   }
@@ -40,6 +41,19 @@ export default class Home extends Component {
     ]).start();
 
     this.loadData();
+  }
+
+  onChangeEvent = ()=>{
+
+    let realm = Realm.getRealm();
+    let user = realm.objects("User")[0];
+
+    this.state.event = user.event;
+    this.state.map = event2map(this.state.event);
+    this.state.percent = 0;
+    this.state.event_selected = true;
+
+    this.setState(this.state);
   }
 
   changePercent = (percent)=>{
@@ -137,7 +151,7 @@ export default class Home extends Component {
           
           <Province
             width={WIDTH * 0.6}
-            svgData={Tehran}
+            svgData={this.state.map}
             svgProps={{fill: '#c5f0b9', strokeWidth: 1, stroke: '#c5f0b9'}}
             pathAnimation={true}
           />
@@ -302,3 +316,15 @@ const styles = StyleSheet.create({
     color:'rgba(0,0,0,0.2)'
   }
 });
+
+const event2map = (event)=>{
+
+  switch(event){
+
+    case"تهران":return Tehran;
+    case"گیلان":return Guilan;
+    case"لرستان":return Lorestan;
+    case"آذربایجان غربی":return WestAzarbayjan;
+    default: return Tehran;
+  }
+}
