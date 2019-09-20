@@ -5,25 +5,54 @@ import Header from '../components/Header';
 import mark from '../assets/icons/mark.png';
 import ProfileCard from '../components/ProfileCard';
 import { AndroidBackHandler } from 'react-navigation-backhandler';
+import Dialog, {SlideAnimation} from 'react-native-popup-dialog';
+import ViewProfile from '../pages/ViewProfile';
+import c1 from '../assets/images/c1.png';
+import c2 from '../assets/images/c2.png';
+import c3 from '../assets/images/c3.png';
+import c4 from '../assets/images/c4.png';
+import c5 from '../assets/images/c5.png';
+import c6 from '../assets/images/c6.png';
+import c7 from '../assets/images/c7.png';
+import c8 from '../assets/images/c8.png';
+
+const Cars = {c1,c2,c3,c4,c5,c6,c7,c8};
 
 export default class TopUsers extends Component {
 
-    showProfile = (index, name, score)=>{
+    state = {name:"", score:"" , car:"c3", dialog:false}
 
-        //show profile dialog
+    showProfile = (name, score, car)=>{
+
+        this.state.name = name;
+        this.state.score = score;
+        this.state.car = car;
+        this.state.dialog = true;
+
+        this.setState(this.state);
+    }
+
+    dismiss = ()=>{
+
+        this.state.dialog = false;
+        this.setState(this.state);
     }
 
     onBack=()=>{
         
-        this.props.navigation.navigate("Home");
-        return true;
+        if(this.state.dialog){
+            this.dismiss()
+        }else{
+            this.props.navigation.navigate("Home");
+            return true;
+        }
     }
 
     render() {
         return (
             <View style={s.con}>
                 <AndroidBackHandler onBackPress={this.onBack}/>
-                <Header title="برترین های هفته گذشته" onBack={this.onBack}/>
+                <Header title="برترین های هفته قبل" onBack={this.onBack}/>
 
                 <View style={s.sec1}>
                     <Text style={s.text1}>{"مقصد های هفته گذشته"}</Text>
@@ -45,8 +74,12 @@ export default class TopUsers extends Component {
                 <FlatList
                     style={s.list1}
                     data={list}
-                    renderItem={({item, index})=>(<ProfileCard onPress={this.showProfile} name={item.name} score={item.score} key={`uc${index}`} index={index}/>)}
+                    renderItem={({item, index})=>(<ProfileCard showProfile={this.showProfile} onPress={this.showProfile} car={item.car} name={item.name} score={item.score} key={`uc${index}`} index={index}/>)}
                 />
+
+                <Dialog visible={this.state.dialog} animationDuration={600} dialogAnimation={new SlideAnimation()}>
+                    <ViewProfile dismiss={this.dismiss} name={this.state.name} score={this.state.score} car={this.state.car}/>
+                </Dialog>
 
             </View>
         )
@@ -92,7 +125,7 @@ const s = StyleSheet.create({
         textAlign:'right',
         direction:'rtl',
         fontFamily:'shabnam',
-        fontSize:20,
+        fontSize:18,
         paddingRight:20,
         color:Consts.colors.b2,
     },
@@ -108,24 +141,24 @@ const s = StyleSheet.create({
 })
 
 const list = [
-    {name:"حسن شوماخر", score:"6780"},
-    {name:"علی رضا ملکی", score:"6040"},
-    {name:"نیکو رزبرگ", score:"5610"},
-    {name:"اکبر مشتی", score:"5500"},
-    {name:"امروز بامبی", score:"5435"},
-    {name:"چی بگم آخه؟", score:"5105"},
-    {name:"مریم اصغری", score:"5020"},
-    {name:"پور قاسم", score:"4720"},
-    {name:"امین بی حیایی", score:"4530"},
-    {name:"فرشاد مرادونا", score:"4225"},
-    {name:"لیور از پول", score:"4160"},
-    {name:"عادل فردوس پوست", score:"4100"},
-    {name:"مهدی شریفی", score:"3600"},
-    {name:"اصغر فریادی", score:"3425"},
-    {name:"علی علی نژاد", score:"3330"},
-    {name:"مستر نو بادی", score:"3230"},
-    {name:"رابرت 98", score:"3105"},
-    {name:"فاطمه توقی", score:"3005"},
-    {name:"امیررضا قربانی", score:"2055"},
-    {name:"پری شب", score:"2030"},
+    {name:"حسن شوماخر", score:"6780", car:"c7"},
+    {name:"علی رضا ملکی", score:"6040", car:"c8"},
+    {name:"نیکو رزبرگ", score:"5610", car:"c6"},
+    {name:"اکبر مشتی", score:"5500", car:"c7"},
+    {name:"امروز بامبی", score:"5435", car:"c5"},
+    {name:"چی بگم آخه؟", score:"5105", car:"c4"},
+    {name:"مریم اصغری", score:"5020", car:"c3"},
+    {name:"پور قاسم", score:"4720", car:"c5"},
+    {name:"امین بی حیایی", score:"4530", car:"c6"},
+    {name:"فرشاد مرادونا", score:"4225", car:"c6"},
+    {name:"لیور از پول", score:"4160", car:"c7"},
+    {name:"عادل فردوس پوست", score:"4100", car:"c6"},
+    {name:"مهدی شریفی", score:"3600", car:"c2"},
+    {name:"اصغر فریادی", score:"3425", car:"c4"},
+    {name:"علی علی نژاد", score:"3330", car:"c5"},
+    {name:"مستر نو بادی", score:"3230", car:"c5"},
+    {name:"رابرت 98", score:"3105", car:"c3"},
+    {name:"فاطمه توقی", score:"3005", car:"c2"},
+    {name:"امیررضا قربانی", score:"2055", car:"c3"},
+    {name:"پری شب", score:"2030", car:"c2"},
 ]

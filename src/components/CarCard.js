@@ -1,8 +1,19 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import Consts from '../Consts';
+import Realm from '../db/realm';
 
 export default class ProfileCard extends Component {
+
+    select = ()=>{
+        
+        let realm = Realm.getRealm();
+        let user = realm.objects("User")[0];
+        realm.write(()=>{
+            user.car = this.props.name;
+            this.props.onSelect();
+        })
+    }
 
     render() {
 
@@ -14,9 +25,14 @@ export default class ProfileCard extends Component {
         return (
             <View style={[s.con, style]}>
 
-                <Text style={s.text1}>{this.props.name}</Text>
+                <Image style={s.img1} source={this.props.car} resizeMode="contain"/>
 
-                <Text style={s.text2}>{this.props.score+" "}<Text style={s.text3}>{"امتیاز"}</Text></Text>
+                <TouchableOpacity style={s.btn1} onPress={this.select}>
+
+                    {this.props.price?(<Text style={s.text2}>{this.props.price}</Text>):
+                    (<Text style={s.text2}>{"انتخاب"}</Text>)}
+
+                </TouchableOpacity>
                 
             </View>
         )
@@ -33,11 +49,22 @@ const s = StyleSheet.create({
         width,
         flexDirection:'row-reverse',
         alignItems:'center',
+        justifyContent:'space-around'
     },
 
     img1:{
-        height:'80%',
-        width:"16%",
+        height:'90%',
+        width:"20%",
+    },
+
+    btn1:{
+
+        height:'50%',
+        width:'30%',
+        borderRadius:8,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:Consts.colors.c3
     },
 
     text1:{
@@ -48,11 +75,9 @@ const s = StyleSheet.create({
     },
 
     text2:{
-        width:"28%",
-        paddingLeft:30,
-        textAlign:'left',
+
         fontFamily:'shabnam',
-        color:Consts.colors.b2
+        color:Consts.colors.a1
     },
 
     text3:{

@@ -7,6 +7,8 @@ import {
   WestAzarbayjan,
 } from '../components/Provinces/SvgData';
 import PlaceDescription from '../components/PlaceDescription';
+import Header from '../components/Header';
+import {AndroidBackHandler} from 'react-navigation-backhandler';
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 const {Value, event} = Animated;
 const svgProps = {
@@ -52,9 +54,19 @@ export class SelectDestination extends Component {
     });
   }
 
+  onBack = ()=>{
+
+    this.props.navigation.navigate("Home");
+    return true;
+  }
+
   render() {
     return (
       <View style={styles.container}>
+
+        <AndroidBackHandler onBackPress={this.onBack}/>
+        <Header title="انتخاب مقصد" onBack={this.onBack}/>
+
         <Animated.ScrollView
           horizontal={true}
           decelerationRate="normal"

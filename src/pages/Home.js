@@ -6,6 +6,7 @@ import {
   TouchableNativeFeedback,
   Image,
   Animated,
+  TouchableOpacity
 } from 'react-native';
 import Consts from '../Consts';
 const {width: WIDTH} = Consts;
@@ -16,9 +17,14 @@ import scoreboardIcon from '../assets/images/scoreboard.png';
 import arrowUpIcon from '../assets/images/arrow_up.png';
 import logo from '../assets/images/racing.png';
 import profile from '../assets/icons/profile.png';
+import SnapShot from '../components/SnapShot';
+import Realm from '../db/realm';
 const ICON_SIZE = 36;
 
 export default class Home extends Component {
+
+  state = {percent:0, event_selected:false, city:"تهران"}
+
   constructor(props) {
     super(props);
     this.arrowOpacity = new Animated.Value(0);
@@ -26,22 +32,55 @@ export default class Home extends Component {
   }
   componentDidMount() {
     Animated.stagger(0, [
-      Animated.timing(this.arrowOpacity, {toValue: 1, duration: 600}),
-      Animated.timing(this.arrowTransY, {toValue: 0, duration: 500}),
+      Animated.timing(this.arrowOpacity, {toValue: 1, duration: 800}),
+      Animated.timing(this.arrowTransY, {toValue: 0, duration: 700}),
     ]).start();
+
+    this.loadData();
+  }
+
+  loadData = (cb)=>{
+
+    let realm = Realm.getRealm();
+    let user = realm.objects("User")[0];
+    this.state.city = user.city;
+    this.setState(this.state, cb);
   }
 
   onProfile = ()=>{
 
-    this.props.navigation.navigate("Profile")
+    this.props.navigation.navigate("Profile");
   }
 
   onTopUsers = ()=>{
 
-    this.props.navigation.navigate("TopUsers")
+    this.props.navigation.navigate("TopUsers");
+  }
+
+  onStateSelect = ()=>{
+    this.props.navigation.navigate("StateSelect");
+  }
+
+  onProgress = ()=>{
+    this.props.navigation.navigate("Progress");
   }
 
   render() {
+
+    let percent_style = {display:"flex"}
+
+    
+
+    let progress_btn_style = styles.footerButton;
+    let percentIcon = {}
+
+    if(!this.state.event_selected){
+      percent_style = {display:"none"}
+      progress_btn_style = styles.btn2;
+      percentIcon = {tintColor:Consts.colors.c3}
+    }
+
+
     return (
       <View style={styles.container}>
         {/* Header */}
@@ -79,23 +118,35 @@ export default class Home extends Component {
         {/* main center content */}
         <View style={styles.content}>
           <Text style={[styles.textFontStyle, styles.contentText]}>
-            مکان فعلی شما: تهران
+            نقطه شروع من : تهران
           </Text>
+
+          
+          
           <Province
             width={WIDTH * 0.6}
             svgData={Tehran}
             svgProps={{fill: '#c5f0b9', strokeWidth: 1, stroke: '#c5f0b9'}}
             pathAnimation={true}
           />
-          <Text style={[styles.textFontStyle, styles.contentText]}>
-            مسیرت رو انتخاب کن {' ; -)'}
-          </Text>
+
+          <TouchableOpacity style={styles.btn1} onPress={this.onStateSelect}>
+            <Text style={styles.txt1}>{"سفر های این هفته"}</Text>
+          </TouchableOpacity>
+
+          <Text style={styles.txt2}>{this.state.city}</Text>
+
         </View>
 
         {/* footer */}
         <View style={styles.footer}>
-          <TouchableNativeFeedback>
-            <View style={styles.footerButton}>
+
+          <View style={styles.sec1}>
+            <SnapShot/>
+          </View>
+
+          <TouchableOpacity disabled={!this.state.event_selected} style={progress_btn_style} onPress={this.onProgress}>
+
               <Animated.Image
                 resizeMode={'contain'}
                 source={arrowUpIcon}
@@ -104,12 +155,12 @@ export default class Home extends Component {
                   {
                     transform: [{translateY: this.arrowTransY}],
                     opacity: this.arrowOpacity,
-                  },
+                  }, percentIcon
                 ]}
               />
-              <Text style={styles.footerButtonText}>32 %</Text>
-            </View>
-          </TouchableNativeFeedback>
+              <Text style={[styles.footerButtonText, percent_style]}>{`${this.state.percent} %`}</Text>
+
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -118,31 +169,63 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
   content: {
-    flexGrow: 5,
+    height:Consts.height*0.6,
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    // backgroundColor: 'blue',
+    paddingTop:20,
   },
   contentText: {
     fontSize: 22,
   },
+
+  btn1:{
+    height:Consts.height*0.1,
+    width: Consts.width*0.8,
+    backgroundColor: Consts.colors.c3,
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation:5,
+  },
+
+  btn2:{
+    height:Consts.height*0.1,
+    width: Consts.width*0.8,
+    padding: 10,
+    borderColor: Consts.colors.c3,
+    borderBottomRightRadius: 15,
+    borderBottomLeftRadius: 15,
+    marginBottom: 20,
+    borderWidth:2,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  sec1:{
+    height:"50%",
+    width:'100%',
+  },
+
   footer: {
-    flexGrow: 4,
-    backgroundColor: '#c5f0b9',
-    justifyContent: 'flex-end',
+    height:Consts.height*0.31,
     alignItems: 'center',
   },
   footerButton: {
-    width: '80%',
+    height:Consts.height*0.1,
+    width: Consts.width*0.8,
     padding: 10,
-    backgroundColor: '#6bc94f',
+    backgroundColor: Consts.colors.c3,
     borderBottomRightRadius: 15,
     borderBottomLeftRadius: 15,
     marginBottom: 20,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    elevation:5,
   },
   footerButtonText: {
     color: '#fff',
@@ -187,4 +270,21 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     backgroundColor: 'green',
   },
+
+  txt1:{
+    color: '#fff',
+    fontSize: 22,
+    fontFamily: 'shabnam',
+  },
+
+  txt2:{
+    position:'absolute',
+    height:'100%',
+    width:'100%',
+    textAlign:'center',
+    textAlignVertical:'center',
+    fontFamily:"shabnam",
+    fontSize:25,
+    color:'rgba(0,0,0,0.2)'
+  }
 });

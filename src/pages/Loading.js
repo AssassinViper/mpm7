@@ -11,7 +11,7 @@ import {AndroidBackHandler} from 'react-navigation-backhandler';
 import Consts from '../Consts';
 import Controller from '../Controller';
 import Realm from '../db/realm';
-import splash from '../assets/images/racing.png';
+import splash from '../assets/images/racing_2.png';
 
 export default class Loading extends Component {
   async componentDidMount() {
@@ -59,6 +59,7 @@ export default class Loading extends Component {
 
         <Image style={s.img1} source={splash} resizeMode="contain" />
         <Text style={s.text1}>{'جاده سوار'}</Text>
+
       </View>
     );
   }
@@ -78,6 +79,11 @@ const s = StyleSheet.create({
   img1: {
     height: '40%',
     tintColor: Consts.colors.b3,
+  },
+
+  img2:{
+    height,
+    width
   },
 
   text1: {
