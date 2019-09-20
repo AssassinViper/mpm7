@@ -1,7 +1,9 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
-import img from '../assets/images/n3.png';
-const IMAGE_SIZE = 140;
+import img from '../assets/images/mellat-park.jpg';
+import Consts from '../Consts';
+const {width} = Consts;
+const IMAGE_SIZE = width * 0.4;
 
 const PlaceDescription = () => {
   return (
@@ -27,27 +29,27 @@ const styles = StyleSheet.create({
     width: IMAGE_SIZE,
     height: IMAGE_SIZE,
     borderColor: '#172121',
-    borderWidth: 10,
+    borderWidth: 8,
     borderRadius: IMAGE_SIZE / 2,
     overflow: 'hidden',
     position: 'absolute',
-    top: '12%',
-    right: -IMAGE_SIZE / 2,
-    
+    bottom: '12%',
+    padding: 8,
+    right: -IMAGE_SIZE / 2.5,
   },
   heading: {
     fontFamily: 'shabnam',
     color: '#fff',
     fontSize: 26,
     fontWeight: 'bold',
-    margin: 10,
-    marginRight: IMAGE_SIZE / 3,
+    marginTop: 20,
+    marginRight: IMAGE_SIZE / 5,
   },
   place: {
     fontFamily: 'shabnam',
     color: '#eee',
     fontSize: 20,
-    marginRight: IMAGE_SIZE / 2,
+    marginRight: IMAGE_SIZE / 5,
   },
 });
 

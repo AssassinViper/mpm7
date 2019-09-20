@@ -25,10 +25,9 @@ export class SelectDestination extends Component {
     super(props);
 
     this.scrollX = new Value(0);
-    this.onScrollEventHandler = event(
-      [{nativeEvent: {contentOffset: {x: this.scrollX}}}],
-      
-    );
+    this.onScrollEventHandler = event([
+      {nativeEvent: {contentOffset: {x: this.scrollX}}},
+    ]);
     this.indicatorWidth = this.scrollX.interpolate({
       inputRange: [
         0,
@@ -58,6 +57,7 @@ export class SelectDestination extends Component {
       <View style={styles.container}>
         <Animated.ScrollView
           horizontal={true}
+          decelerationRate="normal"
           style={styles.scrollView}
           showsHorizontalScrollIndicator={false}
           snapToInterval={WIDTH}
@@ -153,6 +153,7 @@ const styles = StyleSheet.create({
     flexGrow: 2,
   },
   item: {
+    paddingTop: 10,
     width: WIDTH,
     alignItems: 'center',
   },
