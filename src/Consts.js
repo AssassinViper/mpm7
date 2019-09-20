@@ -10,6 +10,7 @@ export const Consts = {
   height,
   width,
   fontScale,
+  speed: 1,
 
   colors: {
     a1: '#FFFFFF',

@@ -23,11 +23,11 @@ const snapPoints = {
   0.79: 4,
   0.98: 5,
 };
+const SP = [0.03, 0.17, 0.43, 0.79, 0.98];
 
 const Cars = {c1, c2, c3, c4, c5, c6, c7, c8};
 
 class RoadProgress extends React.Component {
-
   constructor(props) {
     super(props);
     this.path =
@@ -37,7 +37,7 @@ class RoadProgress extends React.Component {
     this.pathTotalLength = this.pathProps.getTotalLength();
     this.carMoveAnim = new Animated.Value(0);
     this.carRef = React.createRef();
-    this.state = {unlockedMissions: 0, car: c1, city:"تهران", event:"گیلان"};
+    this.state = {unlockedMissions: 0, car: c1, city: 'تهران', event: 'گیلان'};
 
     Controller.controller.progress_changeCar = this.changeCar;
     Controller.controller.progress_moveCar = this.moveCar;
@@ -45,16 +45,14 @@ class RoadProgress extends React.Component {
   }
 
   componentDidMount() {
-
     let realm = Realm.getRealm();
-    let user = realm.objects("User")[0];
+    let user = realm.objects('User')[0];
 
     this.state.city = user.city;
     this.state.event = user.event;
 
     this.changeCar(user.car);
 
-    
     // const {pathProps, carRef} = this;
     // this.carMoveAnim.addListener(({value}) => {
     //   this.moveCar(value / this.pathTotalLength);
@@ -71,14 +69,28 @@ class RoadProgress extends React.Component {
     this.setState({car: Cars[id]});
   };
 
-  changeEvent = (event)=>{
+  changeEvent = event => {
     this.setState({event});
-  }
+  };
 
   moveCar = percent => {
     const value = percent * (this.pathTotalLength - 130) + 50;
-    if (snapPoints[percent.toFixed(2)]) {
-      this.setState({unlockedMissions: snapPoints[percent.toFixed(2)]});
+
+    if (percent >= SP[4] && this.state.unlockedMissions < 5) {
+      this.setState({unlockedMissions: 5});
+      // alert(5);
+    } else if (percent >= SP[3] && this.state.unlockedMissions < 4) {
+      this.setState({unlockedMissions: 4});
+      // alert(4);
+    } else if (percent >= SP[2] && this.state.unlockedMissions < 3) {
+      this.setState({unlockedMissions: 3});
+      // alert(3);
+    } else if (percent >= SP[1] && this.state.unlockedMissions < 2) {
+      this.setState({unlockedMissions: 2});
+      // alert(2);
+    } else if (percent >= SP[0] && this.state.unlockedMissions < 1) {
+      this.setState({unlockedMissions: 1});
+      // alert(1);
     }
     const carProps = this.pathProps.getPropertiesAtLength(value);
     this.carRef.current.setNativeProps({
@@ -159,14 +171,10 @@ class RoadProgress extends React.Component {
               r={16.8}
             />
           </G>
-          {/* <G fill={'#00f'} transform="translate(225.538 422.464)">
-            <Label style={{fontSize: 20}}>{origin}</Label>
-          </G> */}
+
           <G fontSize={35}>
             <Circle cx={275} cy={520} r={45} fill={'#d21358'} />
-
             <Circle cx={265} cy={-20} r={45} fill={'#6fc94d'} />
-            {/* <Label style={{}}>{destination}</Label> */}
           </G>
           <G
             fill={'#fff'}
@@ -179,6 +187,7 @@ class RoadProgress extends React.Component {
             <Text transform="translate(133.538 168.464)">{'4'}</Text>
             <Text transform="translate(200.538 83.465)">{'5'}</Text>
           </G>
+
           <Image
             ref={this.carRef}
             href={this.state.car}
@@ -186,14 +195,20 @@ class RoadProgress extends React.Component {
             height={CAR_HEIGHT}
             transform={`translate(${CAR_WIDTH / 2} ${CAR_HEIGHT /
               2}) rotate(0) translate(-${CAR_WIDTH / 2} -${CAR_HEIGHT / 2})`}
-            // rotation={Math.atan(carProps.tangentX)}
-            // translateX={carProps.x - CAR_WIDTH / 2}
-            // translateY={carProps.y}
-            // rotation={carAngle}
           />
         </Svg>
 
-        <Label style={{position:"absolute", fontFamily:'shabnam', textAlign:'center', top:20, width:'100%', fontSize:25}}>{"حرکت از "+ this.state.city+" به سمت "+this.state.event}</Label>
+        <Label
+          style={{
+            position: 'absolute',
+            fontFamily: 'shabnam',
+            textAlign: 'center',
+            top: 20,
+            width: '100%',
+            fontSize: 25,
+          }}>
+          {'حرکت از ' + this.state.city + ' به سمت ' + this.state.event}
+        </Label>
       </View>
     );
   }

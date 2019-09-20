@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   BackHandler,
   TextInput,
+  ToastAndroid,
 } from 'react-native';
 import Consts from '../Consts';
 const {width: WIDTH, height: HEIGHT} = Consts;
@@ -56,8 +57,7 @@ export default class Home extends Component {
     this.loadData();
   }
 
-  onChangeEvent = ()=>{
-
+  onChangeEvent = () => {
     let realm = Realm.getRealm();
     let user = realm.objects('User')[0];
 
@@ -65,15 +65,16 @@ export default class Home extends Component {
     this.state.map = event2map(this.state.event);
     this.state.percent = 0;
     Controller.controller.SnapShot.change_percent(0);
-    Controller.controller.progress_changeEvent(user.event);
+    if (Controller.controller.progress_changeEvent !== undefined) {
+      Controller.controller.progress_changeEvent(user.event);
+    }
     this.state.event_selected = true;
 
     this.setState(this.state);
   };
 
   changePercent = percent => {
-
-    if(percent == 100){
+    if (percent == 100) {
       //Controller.controller.show_Dialog(<Success/>);
     }
     this.percentText.current.setNativeProps({text: percent + ' %'});
@@ -84,11 +85,11 @@ export default class Home extends Component {
     let user = realm.objects('User')[0];
     this.state.city = user.city;
     this.state.event = user.event;
-    
-    if(user.event != "none"){
+
+    if (user.event != 'none') {
       this.state.event_selected = true;
       this.state.map = event2map(user.event);
-    }else{
+    } else {
       this.state.event = user.city;
     }
 
@@ -111,10 +112,23 @@ export default class Home extends Component {
     this.props.navigation.navigate('Progress');
   };
 
+  closeApp = false;
   onBack = () => {
-    Controller.controller.SnapShot.clearInterval();
-    BackHandler.exitApp();
-    return true;
+    if (this.closeApp === false) {
+      ToastAndroid.show(
+        'برای خروج دوباره دکمه بازگشت را بفشارید',
+        ToastAndroid.LONG,
+      );
+      this.closeApp = true;
+      setTimeout(() => {
+        this.closeApp = false;
+      }, 2000);
+      return true;
+    } else {
+      Controller.controller.SnapShot.clearInterval();
+      BackHandler.exitApp();
+      return true;
+    }
   };
 
   render() {
@@ -168,7 +182,9 @@ export default class Home extends Component {
 
         {/* main center content */}
         <View style={styles.content}>
-          <Text style={[styles.textFontStyle, styles.contentText]}>{"نقطه شروع من : تهران"}</Text>
+          <Text style={[styles.textFontStyle, styles.contentText]}>
+            {'نقطه شروع من : تهران'}
+          </Text>
 
           <Province
             height={HEIGHT * 0.25}
@@ -177,13 +193,11 @@ export default class Home extends Component {
             pathAnimation={true}
           />
 
-          
-          <Text style={styles.txt2}>{"\n"+this.state.event}</Text>
+          <Text style={styles.txt2}>{'\n' + this.state.event}</Text>
 
           <TouchableOpacity style={styles.btn1} onPress={this.onStateSelect}>
             <Text style={styles.txt1}>{'سفر های این هفته'}</Text>
           </TouchableOpacity>
-
         </View>
 
         {/* footer */}
@@ -342,12 +356,11 @@ const styles = StyleSheet.create({
     fontFamily: 'shabnam',
     fontSize: 20,
     //backgroundColor:'red',
-    color: 'rgba(0,0,0,0.2)',
+    color: 'rgba(0,0,0,0.6)',
   },
 });
 
 const event2map = event => {
-
   let pic = undefined;
 
   switch (event) {
@@ -367,5 +380,5 @@ const event2map = event => {
       pic = Tehran;
   }
 
-  return pic
+  return pic;
 };
