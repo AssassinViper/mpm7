@@ -12,6 +12,7 @@ import c5 from '../assets/images/c5.png';
 import c6 from '../assets/images/c6.png';
 import c7 from '../assets/images/c7.png';
 import c8 from '../assets/images/c8.png';
+import { AndroidBackHandler } from 'react-navigation-backhandler';
 
 export default class CarSelect extends Component {
 
@@ -26,6 +27,9 @@ export default class CarSelect extends Component {
     render() {
         return (
             <View style={s.con}>
+
+                <AndroidBackHandler onBackPress={this.props.onClose}/>
+
                 <TouchableOpacity style={s.btn1} onPress={this.props.onClose}>
                         <Image style={s.img1} source={close} resizeMode="contain"/>
                 </TouchableOpacity>
