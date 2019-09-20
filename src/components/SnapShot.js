@@ -43,7 +43,7 @@ export default class SnapShot extends Component {
 
     this.state.car = Cars[user.car];
 
-    if (user.event != 'none') {
+    if (user.event == 'none') {
       let c = (
         <Image style={s.img1} source={this.state.car} resizeMode="contain" />
       );

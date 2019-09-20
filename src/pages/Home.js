@@ -57,8 +57,6 @@ export default class Home extends Component {
 
   onChangeEvent = ()=>{
 
-    alert("1");
-    
     let realm = Realm.getRealm();
     let user = realm.objects('User')[0];
 
@@ -66,8 +64,6 @@ export default class Home extends Component {
     this.state.map = event2map(this.state.event);
     this.state.percent = 0;
     this.state.event_selected = true;
-
-    alert(this.state.event)
 
     this.setState(this.state);
   };
@@ -80,6 +76,13 @@ export default class Home extends Component {
     let realm = Realm.getRealm();
     let user = realm.objects('User')[0];
     this.state.city = user.city;
+    this.state.event = user.event;
+    
+    if(user.event != "none"){
+      this.state.event_selected = true;
+      this.state.map = event2map(user.event);
+    }
+
     this.setState(this.state, cb);
   };
 
@@ -155,24 +158,22 @@ export default class Home extends Component {
 
         {/* main center content */}
         <View style={styles.content}>
-          <Text style={[styles.textFontStyle, styles.contentText]}>
-            نقطه شروع من : تهران
-          </Text>
+          <Text style={[styles.textFontStyle, styles.contentText]}>{"نقطه شروع من : تهران"}</Text>
 
           <Province
             height={HEIGHT * 0.25}
-            svgData={Tehran}
+            svgData={this.state.map}
             svgProps={{fill: '#c5f0b9', strokeWidth: 1, stroke: '#c5f0b9'}}
             pathAnimation={true}
           />
 
-          <Text style={styles.txt2}>{this.state.city}</Text>
+          
+          <Text style={styles.txt2}>{"\n"+this.state.event}</Text>
 
           <TouchableOpacity style={styles.btn1} onPress={this.onStateSelect}>
             <Text style={styles.txt1}>{'سفر های این هفته'}</Text>
           </TouchableOpacity>
 
-          <Text style={styles.txt2}>{this.state.city}</Text>
         </View>
 
         {/* footer */}
@@ -329,23 +330,32 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     fontFamily: 'shabnam',
-    fontSize: 25,
+    fontSize: 20,
     //backgroundColor:'red',
     color: 'rgba(0,0,0,0.2)',
   },
 });
 
 const event2map = event => {
+
+  let pic = undefined;
+
   switch (event) {
     case 'تهران':
-      return Tehran;
+      pic = Tehran;
+      break;
     case 'گیلان':
-      return Guilan;
+      pic = Guilan;
+      break;
     case 'لرستان':
-      return Lorestan;
+      pic = Lorestan;
+      break;
     case 'آذربایجان غربی':
-      return WestAzarbayjan;
+      pic = WestAzarbayjan;
+      break;
     default:
-      return Tehran;
+      pic = Tehran;
   }
+
+  return pic
 };

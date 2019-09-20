@@ -10,8 +10,6 @@ export default class PlaceDescription extends Component {
 
   onSelect = ()=>{
 
-    alert("1")
-
     let realm = Realm.getRealm();
     let user = realm.objects("User")[0];
 
@@ -20,6 +18,7 @@ export default class PlaceDescription extends Component {
       user.event = this.props.city;
       
       Controller.controller.Home_onChangeEvent();
+      Controller.controller.SnapShot.setData();
 
       if(Controller.controller.Progress_loadData){
         Controller.controller.Progress_loadData();
