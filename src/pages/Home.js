@@ -6,7 +6,8 @@ import {
   TouchableNativeFeedback,
   Image,
   Animated,
-  TouchableOpacity
+  TouchableOpacity,
+  BackHandler
 } from 'react-native';
 import Consts from '../Consts';
 const {width: WIDTH} = Consts;
@@ -19,6 +20,7 @@ import logo from '../assets/images/racing.png';
 import profile from '../assets/icons/profile.png';
 import SnapShot from '../components/SnapShot';
 import Realm from '../db/realm';
+import { AndroidBackHandler } from 'react-navigation-backhandler';
 const ICON_SIZE = 36;
 
 export default class Home extends Component {
@@ -72,6 +74,12 @@ export default class Home extends Component {
     this.props.navigation.navigate("Progress");
   }
 
+  onBack=()=>{
+
+    BackHandler.exitApp();
+    return true;
+  }
+
   render() {
 
     let percent_style = {display:"flex"}
@@ -90,6 +98,7 @@ export default class Home extends Component {
 
     return (
       <View style={styles.container}>
+        <AndroidBackHandler onBackPress={this.onBack}/>
         {/* Header */}
         <View style={styles.header}>
           {/* ScoreBoard Icon */}
