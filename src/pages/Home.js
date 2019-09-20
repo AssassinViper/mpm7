@@ -26,6 +26,7 @@ import logo from '../assets/images/racing.png';
 import profile from '../assets/icons/profile.png';
 import SnapShot from '../components/SnapShot';
 import Realm from '../db/realm';
+import Success from '../components/Success';
 import {AndroidBackHandler} from 'react-navigation-backhandler';
 const ICON_SIZE = 36;
 
@@ -63,12 +64,17 @@ export default class Home extends Component {
     this.state.event = user.event;
     this.state.map = event2map(this.state.event);
     this.state.percent = 0;
+    Controller.controller.SnapShot.change_percent(0)
     this.state.event_selected = true;
 
     this.setState(this.state);
   };
 
   changePercent = percent => {
+
+    if(percent == 100){
+      //Controller.controller.show_Dialog(<Success/>);
+    }
     this.percentText.current.setNativeProps({text: percent + ' %'});
   };
 
@@ -81,6 +87,8 @@ export default class Home extends Component {
     if(user.event != "none"){
       this.state.event_selected = true;
       this.state.map = event2map(user.event);
+    }else{
+      this.state.event = user.city;
     }
 
     this.setState(this.state, cb);
@@ -103,6 +111,7 @@ export default class Home extends Component {
   };
 
   onBack = () => {
+    Controller.controller.SnapShot.clearInterval();
     BackHandler.exitApp();
     return true;
   };

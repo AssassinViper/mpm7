@@ -15,7 +15,7 @@ import Consts from '../Consts';
 const Cars = {c1, c2, c3, c4, c5, c6, c7, c8};
 
 export default class SnapShot extends Component {
-  state = {component: null, car: c1, progress: 25};
+  state = {component: null, car: c1, progress: 25, city:"", event:""};
 
   constructor(props) {
     super(props);
@@ -26,20 +26,36 @@ export default class SnapShot extends Component {
   componentDidMount() {
     this.setData();
 
-    setInterval(() => {
-      if (this.state.progress < 100) {
-        this.state.progress += 0.15;
-        Controller.controller.Home_changePercent(
-          Math.floor(this.state.progress),
-        );
-        this.setData();
-      }
-    }, 200);
+    if(Controller.controller.Home_changePercent != undefined){
+      
+      this.interval = setInterval(() => {
+        if (this.state.progress < 100) {
+          this.state.progress += 0.2
+          //0.15
+          Controller.controller.Home_changePercent(
+            Math.floor(this.state.progress),
+          );
+          
+          this.setData();
+        }
+      }, 200);
+    }
+  }
+
+  clearInterval = ()=>{
+    
+    clearInterval(this.interval);
+  }
+
+  change_percent = (percent)=>{
+    this.state.progress = percent;
   }
 
   setData = () => {
     let realm = Realm.getRealm();
     let user = realm.objects('User')[0];
+
+    this.state.city = user.city;
 
     this.state.car = Cars[user.car];
 
@@ -51,6 +67,9 @@ export default class SnapShot extends Component {
       this.state.component = c;
       this.setState(this.state);
     } else {
+
+      this.state.event = user.event;
+
       let c = (
         <View style={s.sec1}>
           <View style={s.sec2}>
@@ -70,8 +89,8 @@ export default class SnapShot extends Component {
           </View>
 
           <View style={s.sec3}>
-            <Text style={s.text1}>{'تهران'}</Text>
-            <Text style={s.text1}>{'گیلان'}</Text>
+            <Text style={s.text1}>{this.state.city}</Text>
+            <Text style={s.text1}>{this.state.event}</Text>
           </View>
         </View>
       );

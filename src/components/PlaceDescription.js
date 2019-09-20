@@ -24,7 +24,8 @@ export default class PlaceDescription extends Component {
         Controller.controller.Progress_loadData();
       }
 
-      this.props.navigation.navigate("Progress");
+      //this.props.navigation.navigate("Progress");
+      this.props.navigation.navigate("Home");
     });
   }
 
